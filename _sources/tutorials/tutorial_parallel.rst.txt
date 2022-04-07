@@ -1,0 +1,58 @@
+Creating a Parallel Model
+=============================================================
+
+The model used here is similar to the one in the serial use case, except that the
+simulation will be run for 100 steps and there will be 100 agents. This is to show the difference
+between the runtimes of the two versions. 
+
+..  note::
+
+    For more details about the model, please refer to :ref:`the serial use case<Running a Model Serially>`.
+
+In a python file, import the :func:`generate_model<cuda_hybrid.generate_model>` 
+and :func:`cuda_main<cuda_hybrid.cuda_main>` methods from the package:
+
+..  code-block:: python
+
+    from cuda_hybrid import generate_model, cuda_main
+
+The model will be built using :func:`generate_model<cuda_hybrid.generate_model>`:
+
+..  code-block:: python
+
+    hm = generate_model(100, 'insurgency.txt', 'watts', nx.community.label_propagation_communities)
+
+After that, get the indices of the nodes that will participate in the interactions between agents:
+
+..  code-block:: python
+
+    econIdx = hm.fcm_labels['EconomicDevelopment']
+    insurIdx = hm.fcm_labels["AbilityOfInsurgentsToControlThePopulation"]
+
+and then pass them, along with other arguments, which includes the hybridmodel object,
+a list of focus nodes, a list of thresholds for the focus nodes, the maximun number of iterations for FCM, a numpy array
+of arguments for the interaction functions, and optionally, number of steps, to the :func:`cuda_main<cuda_hybrid.cuda_main>`:
+
+..  code-block:: python
+
+    cuda_main(hm, ['Rebelliousness'], [.05], 10, np.array([econIdx, insurIdx], dtype=int))
+
+Five first line of results are displayed below:
+
+..  csv-table:: Intput
+    :file: insurgency_sample.csv
+    :header: "ED","R","AICP"
+
+..  csv-table:: Output
+    :file: out_sample.csv
+    :header: "ED","R","AICP"
+
+The recorded time of the parallel version was ``1.3296318054199219`` seconds, 
+while that of the serial version was ``5.328189849853516`` seconds.
+
+The complete files for the input and output can be found here:
+
+:download:`output.csv <../../../out_100.csv>`
+
+:download:`input.csv <../../../insurgency_100.csv>`
+

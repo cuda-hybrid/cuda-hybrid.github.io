@@ -1,0 +1,119 @@
+A simple serial use case
+------------------------
+
+In this use case, we want stimulate a two-agent model.
+
+Each agent is represented by three nodes: Economic Development(ED), Rebelliousness(R), Ability of Insurgents to Control Population(AICP)
+
+The two agents will interact with each other, and their final values for Rebelliousness will be recorded
+
+The simulation will run only one time to further simplify the use case
+
+First, in your python file, import the hybridModel from the module, along with the create_graph and main2 methods.
+
+..  code-block:: python
+
+    from milestone3 import HybridModel, create_graph, main2
+
+Next, we will create the graph and the HybridModel
+
+..  code-block:: python
+
+    G = create_graph(2, 'watts', 'insurgency_simple.txt')
+    hm = HybridModel(G)
+
+The create_graph function will take three arguments:
+
+* number of agents, type of graph
+
+* the type of graph to be created
+
+* the path to the file for the FCM model
+
+The hybridModel class will take the created graph as the argument to construct the model object.
+
+Now we need a function that simulate the interaction between the agents which follows the two following rules:
+
+#. If the sum of ED values of an agent's neighbors is larger than 105% of the agent's ED, the agent's ED will increase by 105%. If the sum is smaller that 95% of the agent's ED, the agent's ED will increase by 95%. The code for this is illustrated below
+
+    ..  code-block:: python
+        
+        def econ_influence(val, influencing):
+            threshold = 5
+            impact = 5
+            avg = 0.0
+            for num in influencing:
+                avg += num
+            lowerThresh = 1 - threshold / 100.0
+            upperThresh = 1 + threshold / 100.0
+            result = val
+            if avg > val * upperThresh:
+                result = val + val * (1 + impact / 100.0)
+            elif avg < val * lowerThresh:
+                result = val + val * (1 - impact / 100.0)
+            return result
+
+#. The agent's new ED value from the previous step will be influenced by its neighbors' AICP values. Deduct 10% of the total AICPs of its neighbors from its new ED value
+
+    ..  code-block:: python
+
+        def insurgency_influence(influencedVal, influencing):
+            rate = 0.1
+            avg = 0.0
+            result = influencedVal
+            for num in influencing:
+                result -= rate * num
+            avg /= len(influencing)
+            return result
+
+Wrap the above methods in one method which can be latter passed to the main method.
+
+..  code-block:: python
+
+    def insurgency_interact(hm):
+    if hm.ABM_adj.shape[0] <= 1:
+        return
+    # loop through each agent
+    for agent in range(hm.ABM_adj.shape[0]):
+        # grab the neighbors
+        friends = hm.get_neighbors(agent)
+        # get the numeric index for EconomicDevelopment and AbilityOfInsurgentsToControlThePopulation
+        econIdx = hm.fcm_labels["EconomicDevelopment"]
+        insurgeIdx = hm.fcm_labels["AbilityOfInsurgentsToControlThePopulation"]
+        econList = []
+        insurgeList = []
+        # get the list of values for all the neighbors for the two concepts
+        for friend in friends:
+            econList.append(hm.node_val[friend][econIdx])
+            insurgeList.append(hm.node_val[friend][insurgeIdx])
+        # agents now influence each other
+        hm.node_future_val[agent][econIdx] = econ_influence(
+                hm.node_val[agent][econIdx],
+                econList
+        )
+        hm.node_future_val[agent][econIdx] = insurgency_influence(
+                hm.node_future_val[agent][econIdx],
+                insurgeList
+        )
+
+Notice that the above method takes the HybridModel object as the argument. This can be changed depending on the use case.
+To run the simulation, we will run the main2 method as followed:
+ 
+..  code-block:: python
+
+    main2(hm, ['Rebelliousness'], [.05], 10, insurgency_interact, hm)
+
+The main2 method will take six arguments:
+* The HybridModel object
+
+* An array of focus nodes
+
+* An array of thresholds for the foucus nodes
+
+* The maximum number of iterations
+
+* The function for the interactions between agents (created in earlier steps)
+
+* The pointer to the argument list for that function
+
+

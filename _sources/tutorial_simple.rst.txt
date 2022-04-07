@@ -1,0 +1,8 @@
+A simple usecase
+----------------
+
+In this usecase, there are only two agents in one community. 
+Two agents will interact with each other, and their values for Rebelliousness will be recorded
+The simulation will run in only one step to further simplyfy the usecase
+
+First we write the function for the interaction between the two code

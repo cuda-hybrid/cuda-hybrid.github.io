@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Data Visualization Using Seaborn &mdash; cuda_hybrid 0.1 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Documentation" href="../docs.html" />
+    <link rel="prev" title="Customizing Models" href="tutorial_obesity.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> cuda_hybrid
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Tutorials</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="tutorial_serial.html">Running a Model Serially</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial_parallel.html">Creating a Parallel Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial_obesity.html">Customizing Models</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Data Visualization Using Seaborn</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#creating-graphs">Creating graphs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#comparing-runtimes">Comparing runtimes</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../docs.html">Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contribution.html">Contribution</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">cuda_hybrid</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="index.html">Tutorials</a> &raquo;</li>
+      <li>Data Visualization Using Seaborn</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/tutorials/data_visualization.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="data-visualization-using-seaborn">
+<h1>Data Visualization Using Seaborn<a class="headerlink" href="#data-visualization-using-seaborn" title="Permalink to this headline"></a></h1>
+<p>After all data has been generated, a graph is usually created to help visualize the relationship and draw some conclusions
+about the dataset. This document will show how to do this using <code class="docutils literal notranslate"><span class="pre">seaborn</span></code> package.</p>
+<p>The use case described here is from the paper
+<em>Modelling the Joint Effect of Social Determinants and Peers on Obesity Among Canadian Adults</em> which is described
+in <a class="reference internal" href="tutorial_obesity.html#customizing-models"><span class="std std-ref">Customizing Models</span></a>. The model used in the paper will be referred as obesity model.</p>
+<section id="creating-graphs">
+<h2>Creating graphs<a class="headerlink" href="#creating-graphs" title="Permalink to this headline"></a></h2>
+<p>Using <code class="docutils literal notranslate"><span class="pre">seaborn</span></code> to graph will require an object of class <code class="docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code>.</p>
+<p>A csv file that has data collected from running the obesity model with different values of p, 20 replications each, is used here.
+The model was also run with different types of networks, small world and scale-free, which can be indicated from
+the <strong>Type</strong> column.
+The first five rows of the file:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 4%" />
+<col style="width: 4%" />
+<col style="width: 4%" />
+<col style="width: 4%" />
+<col style="width: 4%" />
+<col style="width: 4%" />
+<col style="width: 4%" />
+<col style="width: 4%" />
+<col style="width: 4%" />
+<col style="width: 4%" />
+<col style="width: 4%" />
+<col style="width: 4%" />
+<col style="width: 4%" />
+<col style="width: 4%" />
+<col style="width: 4%" />
+<col style="width: 4%" />
+<col style="width: 4%" />
+<col style="width: 4%" />
+<col style="width: 4%" />
+<col style="width: 4%" />
+<col style="width: 4%" />
+<col style="width: 4%" />
+<col style="width: 4%" />
+<col style="width: 4%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>Type</p></td>
+<td><p>p</p></td>
+<td><p>Run 1</p></td>
+<td><p>Run 2</p></td>
+<td><p>Run 3</p></td>
+<td><p>Run 4</p></td>
+<td><p>Run 5</p></td>
+<td><p>Run 6</p></td>
+<td><p>Run 7</p></td>
+<td><p>Run 8</p></td>
+<td><p>Run 9</p></td>
+<td><p>Run 10</p></td>
+<td><p>Run 11</p></td>
+<td><p>Run 12</p></td>
+<td><p>Run 13</p></td>
+<td><p>Run 14</p></td>
+<td><p>Run 15</p></td>
+<td><p>Run 16</p></td>
+<td><p>Run 17</p></td>
+<td><p>Run 18</p></td>
+<td><p>Run 19</p></td>
+<td><p>Run 20</p></td>
+<td><p>Average</p></td>
+<td><p>Std.dev</p></td>
+</tr>
+<tr class="row-even"><td><p>small world network</p></td>
+<td><p>0</p></td>
+<td><p>0.944109271853976</p></td>
+<td><p>0.943272510462144</p></td>
+<td><p>0.945100833063561</p></td>
+<td><p>0.946047559547820</p></td>
+<td><p>0.944957618976085</p></td>
+<td><p>0.941960336475511</p></td>
+<td><p>0.946285214555486</p></td>
+<td><p>0.945970040931523</p></td>
+<td><p>0.945857081343874</p></td>
+<td><p>0.945126685159369</p></td>
+<td><p>0.945370405974358</p></td>
+<td><p>0.944814020543980</p></td>
+<td><p>0.942529115582702</p></td>
+<td><p>0.942818460147247</p></td>
+<td><p>0.940631718025881</p></td>
+<td><p>0.947534251175898</p></td>
+<td><p>0.946581619284009</p></td>
+<td><p>0.942941265269773</p></td>
+<td><p>0.946720968239520</p></td>
+<td><p>0.937029575173919</p></td>
+<td><p>0.944282927589332</p></td>
+<td><p>0.002481042387706</p></td>
+</tr>
+<tr class="row-odd"><td><p>small world network</p></td>
+<td><p>0.1</p></td>
+<td><p>0.946973076121970</p></td>
+<td><p>0.946617599287052</p></td>
+<td><p>0.942456260775825</p></td>
+<td><p>0.944635084959176</p></td>
+<td><p>0.942467386558992</p></td>
+<td><p>0.945229129421983</p></td>
+<td><p>0.947359922670772</p></td>
+<td><p>0.945104279996451</p></td>
+<td><p>0.946341113241199</p></td>
+<td><p>0.944899313439946</p></td>
+<td><p>0.947696967469431</p></td>
+<td><p>0.945208391937545</p></td>
+<td><p>0.947710293072920</p></td>
+<td><p>0.942961313682385</p></td>
+<td><p>0.942053468596662</p></td>
+<td><p>0.943957862165018</p></td>
+<td><p>0.945498722295999</p></td>
+<td><p>0.943175727314859</p></td>
+<td><p>0.943220964080330</p></td>
+<td><p>0.945398945843107</p></td>
+<td><p>0.944948291146581</p></td>
+<td><p>0.001812287403504</p></td>
+</tr>
+<tr class="row-even"><td><p>small world network</p></td>
+<td><p>0.2</p></td>
+<td><p>0.945395483259351</p></td>
+<td><p>0.940678119300061</p></td>
+<td><p>0.944889970046319</p></td>
+<td><p>0.941832325847629</p></td>
+<td><p>0.943703455315310</p></td>
+<td><p>0.942125149390305</p></td>
+<td><p>0.946008673142990</p></td>
+<td><p>0.943961570081988</p></td>
+<td><p>0.948194000651583</p></td>
+<td><p>0.944752010201218</p></td>
+<td><p>0.945018555034966</p></td>
+<td><p>0.947327981458632</p></td>
+<td><p>0.945978748922288</p></td>
+<td><p>0.946982362587585</p></td>
+<td><p>0.945884821791658</p></td>
+<td><p>0.945575714718527</p></td>
+<td><p>0.940081369257270</p></td>
+<td><p>0.944164020876378</p></td>
+<td><p>0.941742280441609</p></td>
+<td><p>0.942931342843664</p></td>
+<td><p>0.944361397758467</p></td>
+<td><p>0.002227053037776</p></td>
+</tr>
+<tr class="row-odd"><td><p>small world network</p></td>
+<td><p>0.4</p></td>
+<td><p>0.941793814059850</p></td>
+<td><p>0.936209913958135</p></td>
+<td><p>0.940822380533337</p></td>
+<td><p>0.942149056392003</p></td>
+<td><p>0.938623872033771</p></td>
+<td><p>0.938656120872794</p></td>
+<td><p>0.939928795691587</p></td>
+<td><p>0.941674917329126</p></td>
+<td><p>0.940557272976996</p></td>
+<td><p>0.939539946129317</p></td>
+<td><p>0.942636740319198</p></td>
+<td><p>0.940810593683853</p></td>
+<td><p>0.939730963649967</p></td>
+<td><p>0.937378945866146</p></td>
+<td><p>0.938744884469157</p></td>
+<td><p>0.935088346591858</p></td>
+<td><p>0.939827325252386</p></td>
+<td><p>0.940701261986813</p></td>
+<td><p>0.940674633568388</p></td>
+<td><p>0.939726271017177</p></td>
+<td><p>0.939763802819093</p></td>
+<td><p>0.001920758023106</p></td>
+</tr>
+</tbody>
+</table>
+<p>The complete dataset can be found here: <a class="reference download internal" download="" href="../_downloads/f6ccd8767c84893060dca57ac672ee52/obesity_serial.csv"><code class="xref download docutils literal notranslate"><span class="pre">obesity_serial.csv</span></code></a></p>
+<p>The file can be loaded to a panda dataframe using <code class="docutils literal notranslate"><span class="pre">pandas.pd.read_csv()</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="n">runs_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;obesity_serial.csv&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The graph can be plotted and shown using both <code class="docutils literal notranslate"><span class="pre">seaborn</span></code> and <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code>. In this case, line plot is used:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="c1"># Set the background theme for the graph</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">set_style</span><span class="p">(</span><span class="s2">&quot;darkgrid&quot;</span><span class="p">)</span>
+<span class="c1"># Function to use line plot</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">runs</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;p&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;Average&quot;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;Type&quot;</span><span class="p">)</span>
+<span class="c1"># To show the graph</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The result graph is displayed below:</p>
+<img alt="../_images/obesity_serial.svg" src="../_images/obesity_serial.svg" /></section>
+<section id="comparing-runtimes">
+<h2>Comparing runtimes<a class="headerlink" href="#comparing-runtimes" title="Permalink to this headline"></a></h2>
+<p>Graphs can be used to compare the runtime across multiple categories.</p>
+<p>In order to explore how different types of networks influence the runtime of the model for the parallel version,
+data was collected by running the obesity model with different types of networks and increasing number of agents.
+The data are then organized into a csv file. The first five rows are displayed below:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>Number of Agents</p></td>
+<td><p>Type</p></td>
+<td><p>Time (minutes)</p></td>
+</tr>
+<tr class="row-even"><td><p>1000</p></td>
+<td><p>barabasiGreedy</p></td>
+<td><p>0.191486667</p></td>
+</tr>
+<tr class="row-odd"><td><p>5000</p></td>
+<td><p>barabasiGreedy</p></td>
+<td><p>1.3587</p></td>
+</tr>
+<tr class="row-even"><td><p>10000</p></td>
+<td><p>barabasiGreedy</p></td>
+<td><p>4.947505556</p></td>
+</tr>
+<tr class="row-odd"><td><p>40000</p></td>
+<td><p>barabasiGreedy</p></td>
+<td><p>88.92053333</p></td>
+</tr>
+</tbody>
+</table>
+<p>The complete csv file can be found here: <a class="reference download internal" download="" href="../_downloads/b893c8147d7d6bbdfd6fe364b51a0db7/obesity_parallel_gpu.csv"><code class="xref download docutils literal notranslate"><span class="pre">obesity_parallel_gpu.csv</span></code></a></p>
+<p>In order to use the above file for graphing, a pandas dataframe should be created and then <code class="docutils literal notranslate"><span class="pre">seaborn</span></code> and <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code>
+to graph it. Parameter <code class="docutils literal notranslate"><span class="pre">hue</span></code> can be set as <code class="docutils literal notranslate"><span class="pre">Type</span></code> to group the data. Parameter</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="n">runs</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;obesity_parallel_gpu.csv&quot;</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">set_style</span><span class="p">(</span><span class="s2">&quot;darkgrid&quot;</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">runs</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;Number of Agents&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;Time (minutes)&quot;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;Type&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The resulted graph is displayed below:</p>
+<img alt="../_images/obesity_par_time_comp.svg" src="../_images/obesity_par_time_comp.svg" /><p>There are different ways to organize the dataset to help with data Visualization. More details can be found on seaborn
+package page</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="tutorial_obesity.html" class="btn btn-neutral float-left" title="Customizing Models" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../docs.html" class="btn btn-neutral float-right" title="Documentation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Kareem Ghumrawi, Philippe J. Giabbanelli.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

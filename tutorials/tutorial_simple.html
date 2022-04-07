@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>A simple serial use case &mdash; CUDA ABM/FCM 0.1 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Documentation" href="../docs.html" />
+    <link rel="prev" title="Tutorials" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> CUDA ABM/FCM
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Tutorials</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">A simple serial use case</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../docs.html">Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contribution.html">Contribution</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">CUDA ABM/FCM</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="index.html">Tutorials</a> &raquo;</li>
+      <li>A simple serial use case</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/tutorials/tutorial_simple.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="a-simple-serial-use-case">
+<h1>A simple serial use case<a class="headerlink" href="#a-simple-serial-use-case" title="Permalink to this headline"></a></h1>
+<p>In this use case, we want stimulate a two-agent model.</p>
+<p>Each agent is represented by three nodes: Economic Development(ED), Rebelliousness(R), Ability of Insurgents to Control Population(AICP)</p>
+<p>The two agents will interact with each other, and their final values for Rebelliousness will be recorded</p>
+<p>The simulation will run only one time to further simplify the use case</p>
+<p>First, in your python file, import the hybridModel from the module, along with the create_graph and main2 methods.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">milestone3</span> <span class="kn">import</span> <span class="n">HybridModel</span><span class="p">,</span> <span class="n">create_graph</span><span class="p">,</span> <span class="n">main2</span>
+</pre></div>
+</div>
+<p>Next, we will create the graph and the HybridModel</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">G</span> <span class="o">=</span> <span class="n">create_graph</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;watts&#39;</span><span class="p">,</span> <span class="s1">&#39;insurgency_simple.txt&#39;</span><span class="p">)</span>
+<span class="n">hm</span> <span class="o">=</span> <span class="n">HybridModel</span><span class="p">(</span><span class="n">G</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The create_graph function will take three arguments:</p>
+<ul class="simple">
+<li><p>number of agents, type of graph</p></li>
+<li><p>the type of graph to be created</p></li>
+<li><p>the path to the file for the FCM model</p></li>
+</ul>
+<p>The hybridModel class will take the created graph as the argument to construct the model object.</p>
+<p>Now we need a function that simulate the interaction between the agents which follows the two following rules:</p>
+<ol class="arabic">
+<li><p>If the sum of ED values of an agent’s neighbors is larger than 105% of the agent’s ED, the agent’s ED will increase by 105%. If the sum is smaller that 95% of the agent’s ED, the agent’s ED will increase by 95%. The code for this is illustrated below</p>
+<blockquote>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">econ_influence</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="n">influencing</span><span class="p">):</span>
+    <span class="n">threshold</span> <span class="o">=</span> <span class="mi">5</span>
+    <span class="n">impact</span> <span class="o">=</span> <span class="mi">5</span>
+    <span class="n">avg</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="n">influencing</span><span class="p">:</span>
+        <span class="n">avg</span> <span class="o">+=</span> <span class="n">num</span>
+    <span class="n">lowerThresh</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">threshold</span> <span class="o">/</span> <span class="mf">100.0</span>
+    <span class="n">upperThresh</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">threshold</span> <span class="o">/</span> <span class="mf">100.0</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">val</span>
+    <span class="k">if</span> <span class="n">avg</span> <span class="o">&gt;</span> <span class="n">val</span> <span class="o">*</span> <span class="n">upperThresh</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">val</span> <span class="o">+</span> <span class="n">val</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">impact</span> <span class="o">/</span> <span class="mf">100.0</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">avg</span> <span class="o">&lt;</span> <span class="n">val</span> <span class="o">*</span> <span class="n">lowerThresh</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">val</span> <span class="o">+</span> <span class="n">val</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">impact</span> <span class="o">/</span> <span class="mf">100.0</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">result</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p>The agent’s new ED value from the previous step will be influenced by its neighbors’ AICP values. Deduct 10% of the total AICPs of its neighbors from its new ED value</p>
+<blockquote>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">insurgency_influence</span><span class="p">(</span><span class="n">influencedVal</span><span class="p">,</span> <span class="n">influencing</span><span class="p">):</span>
+    <span class="n">rate</span> <span class="o">=</span> <span class="mf">0.1</span>
+    <span class="n">avg</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">influencedVal</span>
+    <span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="n">influencing</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">-=</span> <span class="n">rate</span> <span class="o">*</span> <span class="n">num</span>
+    <span class="n">avg</span> <span class="o">/=</span> <span class="nb">len</span><span class="p">(</span><span class="n">influencing</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">result</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+</ol>
+<p>Wrap the above methods in one method which can be latter passed to the main method.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">insurgency_interact</span><span class="p">(</span><span class="n">hm</span><span class="p">):</span>
+<span class="k">if</span> <span class="n">hm</span><span class="o">.</span><span class="n">ABM_adj</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">:</span>
+    <span class="k">return</span>
+<span class="c1"># loop through each agent</span>
+<span class="k">for</span> <span class="n">agent</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">hm</span><span class="o">.</span><span class="n">ABM_adj</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+    <span class="c1"># grab the neighbors</span>
+    <span class="n">friends</span> <span class="o">=</span> <span class="n">hm</span><span class="o">.</span><span class="n">get_neighbors</span><span class="p">(</span><span class="n">agent</span><span class="p">)</span>
+    <span class="c1"># get the numeric index for EconomicDevelopment and AbilityOfInsurgentsToControlThePopulation</span>
+    <span class="n">econIdx</span> <span class="o">=</span> <span class="n">hm</span><span class="o">.</span><span class="n">fcm_labels</span><span class="p">[</span><span class="s2">&quot;EconomicDevelopment&quot;</span><span class="p">]</span>
+    <span class="n">insurgeIdx</span> <span class="o">=</span> <span class="n">hm</span><span class="o">.</span><span class="n">fcm_labels</span><span class="p">[</span><span class="s2">&quot;AbilityOfInsurgentsToControlThePopulation&quot;</span><span class="p">]</span>
+    <span class="n">econList</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">insurgeList</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="c1"># get the list of values for all the neighbors for the two concepts</span>
+    <span class="k">for</span> <span class="n">friend</span> <span class="ow">in</span> <span class="n">friends</span><span class="p">:</span>
+        <span class="n">econList</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">hm</span><span class="o">.</span><span class="n">node_val</span><span class="p">[</span><span class="n">friend</span><span class="p">][</span><span class="n">econIdx</span><span class="p">])</span>
+        <span class="n">insurgeList</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">hm</span><span class="o">.</span><span class="n">node_val</span><span class="p">[</span><span class="n">friend</span><span class="p">][</span><span class="n">insurgeIdx</span><span class="p">])</span>
+    <span class="c1"># agents now influence each other</span>
+    <span class="n">hm</span><span class="o">.</span><span class="n">node_future_val</span><span class="p">[</span><span class="n">agent</span><span class="p">][</span><span class="n">econIdx</span><span class="p">]</span> <span class="o">=</span> <span class="n">econ_influence</span><span class="p">(</span>
+            <span class="n">hm</span><span class="o">.</span><span class="n">node_val</span><span class="p">[</span><span class="n">agent</span><span class="p">][</span><span class="n">econIdx</span><span class="p">],</span>
+            <span class="n">econList</span>
+    <span class="p">)</span>
+    <span class="n">hm</span><span class="o">.</span><span class="n">node_future_val</span><span class="p">[</span><span class="n">agent</span><span class="p">][</span><span class="n">econIdx</span><span class="p">]</span> <span class="o">=</span> <span class="n">insurgency_influence</span><span class="p">(</span>
+            <span class="n">hm</span><span class="o">.</span><span class="n">node_future_val</span><span class="p">[</span><span class="n">agent</span><span class="p">][</span><span class="n">econIdx</span><span class="p">],</span>
+            <span class="n">insurgeList</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+<p>Notice that the above method takes the HybridModel object as the argument. This can be changed depending on the use case.
+To run the simulation, we will run the main2 method as followed:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">main2</span><span class="p">(</span><span class="n">hm</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;Rebelliousness&#39;</span><span class="p">],</span> <span class="p">[</span><span class="mf">.05</span><span class="p">],</span> <span class="mi">10</span><span class="p">,</span> <span class="n">insurgency_interact</span><span class="p">,</span> <span class="n">hm</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The main2 method will take six arguments:
+* The HybridModel object</p>
+<ul class="simple">
+<li><p>An array of focus nodes</p></li>
+<li><p>An array of thresholds for the foucus nodes</p></li>
+<li><p>The maximum number of iterations</p></li>
+<li><p>The function for the interactions between agents (created in earlier steps)</p></li>
+<li><p>The pointer to the argument list for that function</p></li>
+</ul>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="Tutorials" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../docs.html" class="btn btn-neutral float-right" title="Documentation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Kareem Ghumrawi.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
