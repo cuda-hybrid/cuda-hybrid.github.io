@@ -1,4 +1,4 @@
-Running a Model Serially
+Serial
 =================================================
 
 The two-agent model used in this tutorial is described below:
@@ -136,4 +136,17 @@ The results are displayed below:
     :header-rows: 1
     :stub-columns: 1
 
-The recorded time was ``1.349821`` seconds.
+The recorded time was on average ``1.35 ms`` seconds.
+
+Another way to record time is to use ``%timeit`` and ``%run`` via ipython package. After everything has been set up,
+``%timeit`` can be used as:
+
+..  code-block:: console
+
+    In [75]: %timeit hm.run_serial(["Rebelliousness"], [0.05], 10, insurgency_interact, [hm], 1)
+
+If the model is in a python file, the following code will run the file from within ipython and measure the time:
+
+..  code-block:: console
+
+    In [10]: %timeit %run ./test_insurgency.py

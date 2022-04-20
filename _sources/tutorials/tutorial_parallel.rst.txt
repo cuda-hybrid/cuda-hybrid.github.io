@@ -1,4 +1,4 @@
-Creating a Parallel Model
+Parallel
 =============================================================
 
 The model used here is similar to the one in the serial use case, except that the
@@ -7,7 +7,7 @@ between the runtimes of the two versions.
 
 ..  note::
 
-    For more details about the model, please refer to :ref:`the serial use case<Running a Model Serially>`.
+    For more details about the model, please refer to :ref:`the serial use case<Serial>`.
 
 In a python file, import the :func:`generate_model<cuda_hybrid.generate_model>` 
 and :func:`cuda_main<cuda_hybrid.cuda_main>` methods from the package:
@@ -35,7 +35,7 @@ of arguments for the interaction functions, and optionally, number of steps, to 
 
 ..  code-block:: python
 
-    cuda_main(hm, ['Rebelliousness'], [.05], 10, np.array([econIdx, insurIdx], dtype=int))
+    hm.run_parallel(['Rebelliousness'], [.05], 10, insurgency_interact, [hm], 20)
 
 Five first line of results are displayed below:
 

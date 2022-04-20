@@ -1,79 +1,278 @@
-<!DOCTYPE html>
-<html class="writer-html5" lang="en" >
-<head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Documentation &mdash; cuda_hybrid 0.1 documentation</title>
-      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  <!--[if lt IE 9]>
-    <script src="_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/jquery.js"></script>
-        <script src="_static/underscore.js"></script>
-        <script src="_static/doctools.js"></script>
-    <script src="_static/js/theme.js"></script>
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Documentation &#8212; cuda_hybrid  documentation</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=62ba249389abaaa9ffc34bf36a076bdc1d65ee18" type="text/css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=f31d14ad54b65d19161ba51d4ffff3a77ae00456"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Contribution" href="contribution.html" />
-    <link rel="prev" title="Data Visualization Using Seaborn" href="tutorials/data_visualization.html" /> 
-</head>
+    <link rel="prev" title="Data Visualization" href="tutorials/data_visualization.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
 
-<body class="wy-body-for-nav"> 
-  <div class="wy-grid-for-nav">
-    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
-      <div class="wy-side-scroll">
-        <div class="wy-side-nav-search" >
-            <a href="index.html" class="icon icon-home"> cuda_hybrid
-          </a>
-<div role="search">
-  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
-    <input type="hidden" name="check_keywords" value="yes" />
-    <input type="hidden" name="area" value="default" />
-  </form>
-</div>
-        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
-<ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="tutorials/index.html">Tutorials</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Documentation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="contribution.html">Contribution</a></li>
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="index.html">
+      
+      
+      
+      <h1 class="site-logo" id="site-title">cuda_hybrid  documentation</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Contents
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="installation.html">
+   Installation
+  </a>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="tutorials/index.html">
+   Tutorials
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="tutorials/tutorial_serial.html">
+     Serial
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="tutorials/tutorial_parallel.html">
+     Parallel
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="tutorials/tutorial_obesity.html">
+     Customizing Models
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="tutorials/data_visualization.html">
+     Data Visualization
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Documentation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="contribution.html">
+   Contribution
+  </a>
+ </li>
 </ul>
 
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Theme by the <a href="https://ebp.jupyterbook.org">Executable Book Project</a>
+            </div>
+            
         </div>
-      </div>
-    </nav>
-
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
-          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="index.html">cuda_hybrid</a>
-      </nav>
-
-      <div class="wy-nav-content">
-        <div class="rst-content">
-          <div role="navigation" aria-label="Page navigation">
-  <ul class="wy-breadcrumbs">
-      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>Documentation</li>
-      <li class="wy-breadcrumbs-aside">
-            <a href="_sources/docs.rst.txt" rel="nofollow"> View page source</a>
-      </li>
-  </ul>
-  <hr/>
+    </div>
+    <div id="rtd-footer-container"></div>
 </div>
-          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
-           <div itemprop="articleBody">
-             
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="_sources/docs.rst.txt"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.rst</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Documentation</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
   <section id="module-cuda_hybrid">
-<span id="documentation"></span><h1>Documentation<a class="headerlink" href="#module-cuda_hybrid" title="Permalink to this headline"></a></h1>
+<span id="documentation"></span><h1>Documentation<a class="headerlink" href="#module-cuda_hybrid" title="Permalink to this headline">#</a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="cuda_hybrid.HybridModel">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">cuda_hybrid.</span></span><span class="sig-name descname"><span class="pre">HybridModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ABM</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">networkx.classes.graph.Graph</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">community_algorithm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cuda_hybrid.HybridModel" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">cuda_hybrid.</span></span><span class="sig-name descname"><span class="pre">HybridModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ABM</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">networkx.classes.graph.Graph</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">community_algorithm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cuda_hybrid.HybridModel" title="Permalink to this definition">#</a></dt>
 <dd><p>Create a ABM/FCM hybrid model for simulation based on a created the graph
 Each node of the ABM graph will have an ‘FCM’ attribute that points to an FCM graph.
 Each node of an FCM graph will have a ‘val’ attribute that has the value of that node.</p>
@@ -86,29 +285,15 @@ Each node of an FCM graph will have a ‘val’ attribute that has the value of 
 </dd>
 </dl>
 <dl class="py method">
-<dt class="sig sig-object py" id="cuda_hybrid.HybridModel.generate_communities">
-<span class="sig-name descname"><span class="pre">generate_communities</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cuda_hybrid.HybridModel.generate_communities" title="Permalink to this definition"></a></dt>
-<dd><p>_summary_</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>_description_</p>
-</dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p>_type_</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
 <dt class="sig sig-object py" id="cuda_hybrid.HybridModel.get_neighbors">
-<span class="sig-name descname"><span class="pre">get_neighbors</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span></span></span><a class="headerlink" href="#cuda_hybrid.HybridModel.get_neighbors" title="Permalink to this definition"></a></dt>
-<dd><p>_summary_</p>
+<span class="sig-name descname"><span class="pre">get_neighbors</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span></span></span><a class="headerlink" href="#cuda_hybrid.HybridModel.get_neighbors" title="Permalink to this definition">#</a></dt>
+<dd><p>Get neighbors for node in an adjacency matrix representation of a graph</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>node</strong> (<em>int</em>) – _description_</p>
+<dd class="field-odd"><p><strong>node</strong> (<em>int</em>) – the node for which neighbors are fetched</p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>_description_</p>
+<dd class="field-even"><p>a list of neighbors of the requested node</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>list</p>
@@ -117,38 +302,22 @@ Each node of an FCM graph will have a ‘val’ attribute that has the value of 
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="cuda_hybrid.HybridModel.interact_serial">
-<span class="sig-name descname"><span class="pre">interact_serial</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">focus</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">iters</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">func</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">argv</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cuda_hybrid.HybridModel.interact_serial" title="Permalink to this definition"></a></dt>
-<dd><p>_summary_</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>focus</strong> (<em>_type_</em>) – _description_</p></li>
-<li><p><strong>threshold</strong> (<em>_type_</em>) – _description_</p></li>
-<li><p><strong>iters</strong> (<em>_type_</em>) – _description_</p></li>
-<li><p><strong>func</strong> (<em>_type_</em>) – _description_</p></li>
-<li><p><strong>argv</strong> (<em>_type_</em>) – _description_</p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
 <dt class="sig sig-object py" id="cuda_hybrid.HybridModel.loadNewValues">
-<span class="sig-name descname"><span class="pre">loadNewValues</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cuda_hybrid.HybridModel.loadNewValues" title="Permalink to this definition"></a></dt>
-<dd><p>_summary_</p>
+<span class="sig-name descname"><span class="pre">loadNewValues</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cuda_hybrid.HybridModel.loadNewValues" title="Permalink to this definition">#</a></dt>
+<dd><p>Sets FCM values to future values for each FCM in each agent infrom numba import cuda
+the simulation</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="cuda_hybrid.HybridModel.runFCM">
-<span class="sig-name descname"><span class="pre">runFCM</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">focus</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_it</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cuda_hybrid.HybridModel.runFCM" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">runFCM</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">focus</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_it</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cuda_hybrid.HybridModel.runFCM" title="Permalink to this definition">#</a></dt>
 <dd><p>Runs fuzzy cognitive map for all agents</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>focus</strong> (<em>_type_</em>) – _description_</p></li>
-<li><p><strong>threshold</strong> (<em>_type_</em>) – _description_</p></li>
-<li><p><strong>max_it</strong> (<em>int</em><em>, </em><em>optional</em>) – _description_, defaults to 100</p></li>
+<li><p><strong>focus</strong> (<em>list</em>) – list of focus nodes</p></li>
+<li><p><strong>threshold</strong> (<em>list</em>) – a list of thresholds corresponding to each focus node</p></li>
+<li><p><strong>max_it</strong> (<em>int</em><em>, </em><em>optional</em>) – the maximum number of iterations for each agent, defaults to 100</p></li>
 </ul>
 </dd>
 </dl>
@@ -156,65 +325,63 @@ Each node of an FCM graph will have a ‘val’ attribute that has the value of 
 
 <dl class="py method">
 <dt class="sig sig-object py" id="cuda_hybrid.HybridModel.run_parallel">
-<span class="sig-name descname"><span class="pre">run_parallel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">BPG</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">TPB</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">focus</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">iters</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">between_args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">steps</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cuda_hybrid.HybridModel.run_parallel" title="Permalink to this definition"></a></dt>
-<dd><p>_summary_</p>
+<span class="sig-name descname"><span class="pre">run_parallel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">focus</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">iters</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">func</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">steps</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cuda_hybrid.HybridModel.run_parallel" title="Permalink to this definition">#</a></dt>
+<dd><p>Run the interaction function and stabelize each FCM in parallel for each step</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>BPG</strong> (<em>_type_</em>) – _description_</p></li>
-<li><p><strong>TPB</strong> (<em>_type_</em>) – _description_</p></li>
-<li><p><strong>focus</strong> (<em>_type_</em>) – _description_</p></li>
-<li><p><strong>threshold</strong> (<em>_type_</em>) – _description_</p></li>
-<li><p><strong>iters</strong> (<em>_type_</em>) – _description_</p></li>
-<li><p><strong>args</strong> (<em>_type_</em>) – _description_</p></li>
-<li><p><strong>between_args</strong> (<em>_type_</em>) – _description_</p></li>
-<li><p><strong>steps</strong> (<em>_type_</em>) – _description_</p></li>
+<li><p><strong>focus</strong> (<em>list</em>) – list concept names to stabilize</p></li>
+<li><p><strong>threshold</strong> (<em>list</em>) – stabilization thresholds for corresponding focus nodes</p></li>
+<li><p><strong>iters</strong> (<em>int</em>) – maximum amount of times to iterate</p></li>
+<li><p><strong>func</strong> (<em>function</em>) – interaction function between agents</p></li>
+<li><p><strong>args</strong> (<em>list</em>) – list of arguments for interaction function</p></li>
+<li><p><strong>steps</strong> (<em>int</em>) – number of steps of the simulation</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>_description_</p>
+<dd class="field-even"><p>average values for each focus concept</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>_type_</p>
+<dd class="field-odd"><p>Dict</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="cuda_hybrid.HybridModel.run_serial">
-<span class="sig-name descname"><span class="pre">run_serial</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">focus</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">iters</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">func</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">argv</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">steps</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#cuda_hybrid.HybridModel.run_serial" title="Permalink to this definition"></a></dt>
-<dd><p>_summary_</p>
+<span class="sig-name descname"><span class="pre">run_serial</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">focus</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">iters</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">func</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">argv</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">steps</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#cuda_hybrid.HybridModel.run_serial" title="Permalink to this definition">#</a></dt>
+<dd><p>Run the model serially on CPU</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>focus</strong> (<em>_type_</em>) – _description_</p></li>
-<li><p><strong>threshold</strong> (<em>_type_</em>) – _description_</p></li>
-<li><p><strong>iters</strong> (<em>_type_</em>) – _description_</p></li>
-<li><p><strong>func</strong> (<em>_type_</em>) – _description_</p></li>
-<li><p><strong>argv</strong> (<em>_type_</em>) – _description_</p></li>
-<li><p><strong>steps</strong> (<em>int</em><em>, </em><em>optional</em>) – _description_, defaults to 20</p></li>
+<li><p><strong>focus</strong> (<em>list</em><em>(</em><em>Float64</em><em>)</em>) – a list of focus nodes</p></li>
+<li><p><strong>threshold</strong> (<em>list</em><em>(</em><em>Float64</em><em>)</em>) – a list of thresholds for each focus nodes</p></li>
+<li><p><strong>iters</strong> (<em>int</em>) – the maximum number of iterations when running FCM for each agent</p></li>
+<li><p><strong>func</strong> (<em>function</em>) – the function for interaction between agents</p></li>
+<li><p><strong>argv</strong> (<em>list</em>) – a list of arguments for the interaction function</p></li>
+<li><p><strong>steps</strong> (<em>int</em><em>, </em><em>optional</em>) – the number of steps the model will be run, defaults to 20</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>_description_</p>
+<dd class="field-even"><p>the average values of the focus concepts of all agents of after the simulation</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>float</p>
+<dd class="field-odd"><p>dict</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="cuda_hybrid.HybridModel.transformNetwork">
-<span class="sig-name descname"><span class="pre">transformNetwork</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">nptyping.types._ndarray.NDArray</span><span class="p"><span class="pre">[</span></span><span class="pre">None</span><span class="p"><span class="pre">,</span> </span><span class="pre">nptyping.types._number.Float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span> </span><span class="pre">nptyping.types._ndarray.NDArray</span><span class="p"><span class="pre">[</span></span><span class="pre">None</span><span class="p"><span class="pre">,</span> </span><span class="pre">nptyping.types._number.Float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span> </span><span class="pre">numba.typed.typeddict.Dict</span><span class="p"><span class="pre">,</span> </span><span class="pre">nptyping.types._ndarray.NDArray</span><span class="p"><span class="pre">[</span></span><span class="pre">None</span><span class="p"><span class="pre">,</span> </span><span class="pre">nptyping.types._number.Float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span> </span><span class="pre">nptyping.types._ndarray.NDArray</span><span class="p"><span class="pre">[</span></span><span class="pre">None</span><span class="p"><span class="pre">,</span> </span><span class="pre">nptyping.types._number.Float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#cuda_hybrid.HybridModel.transformNetwork" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">transformNetwork</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">nptyping.types._ndarray.NDArray</span><span class="p"><span class="pre">[</span></span><span class="pre">None</span><span class="p"><span class="pre">,</span> </span><span class="pre">nptyping.types._number.Float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span> </span><span class="pre">nptyping.types._ndarray.NDArray</span><span class="p"><span class="pre">[</span></span><span class="pre">None</span><span class="p"><span class="pre">,</span> </span><span class="pre">nptyping.types._number.Float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span> </span><span class="pre">numba.typed.typeddict.Dict</span><span class="p"><span class="pre">,</span> </span><span class="pre">nptyping.types._ndarray.NDArray</span><span class="p"><span class="pre">[</span></span><span class="pre">None</span><span class="p"><span class="pre">,</span> </span><span class="pre">nptyping.types._number.Float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span> </span><span class="pre">nptyping.types._ndarray.NDArray</span><span class="p"><span class="pre">[</span></span><span class="pre">None</span><span class="p"><span class="pre">,</span> </span><span class="pre">nptyping.types._number.Float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#cuda_hybrid.HybridModel.transformNetwork" title="Permalink to this definition">#</a></dt>
 <dd><p>Use the networkx.Graph provided to extract information, including ABM and FCM adjacency matrices,
 a dictionary that maps FCM lables to their indices in the FCM adjacency matrix, community</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>G</strong> (<em>nx.Graph</em>) – _description_</p>
+<dd class="field-odd"><p><strong>G</strong> (<em>networkx.Graph</em>) – networkx graph to be transformed</p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>_description_</p>
+<dd class="field-even"><p>adjacency matrix, fcm_labels for each node in each agent’s FCM, numpy matrix with FCM values for each agent, numpy matrix with future FCM values for each agent, numpy adjacency matrix with FCM edge weights</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>Tuple[ NDArray[Float64], NDArray[Float64], Dict, NDArray[Float64], NDArray[Float64] ]</p>
@@ -226,85 +393,60 @@ a dictionary that maps FCM lables to their indices in the FCM adjacency matrix, 
 
 <dl class="py function">
 <dt class="sig sig-object py" id="cuda_hybrid.create_FCM_file">
-<span class="sig-prename descclassname"><span class="pre">cuda_hybrid.</span></span><span class="sig-name descname"><span class="pre">create_FCM_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">networkx.classes.digraph.DiGraph</span></span></span><a class="headerlink" href="#cuda_hybrid.create_FCM_file" title="Permalink to this definition"></a></dt>
-<dd><p>_summary_</p>
+<span class="sig-prename descclassname"><span class="pre">cuda_hybrid.</span></span><span class="sig-name descname"><span class="pre">create_FCM_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">networkx.classes.digraph.DiGraph</span></span></span><a class="headerlink" href="#cuda_hybrid.create_FCM_file" title="Permalink to this definition">#</a></dt>
+<dd><p>Create FCM graph for an agent</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>filename</strong> (<em>_type_</em>) – _description_</p>
+<dd class="field-odd"><p><strong>filename</strong> (<em>string</em>) – the path to the file for FCM model</p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>_description_</p>
+<dd class="field-even"><p>a directed graph based on the provided file</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>nx.DiGraph</p>
+<dd class="field-odd"><p>networkx.DiGraph</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="cuda_hybrid.create_graph">
-<span class="sig-prename descclassname"><span class="pre">cuda_hybrid.</span></span><span class="sig-name descname"><span class="pre">create_graph</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">agent_count</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">graph_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cuda_hybrid.create_graph" title="Permalink to this definition"></a></dt>
-<dd><p>_summary_</p>
+<span class="sig-prename descclassname"><span class="pre">cuda_hybrid.</span></span><span class="sig-name descname"><span class="pre">create_graph</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">agent_count</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">graph_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cuda_hybrid.create_graph" title="Permalink to this definition">#</a></dt>
+<dd><p>Create ABM graph</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>agent_count</strong> (<em>_type_</em>) – _description_</p></li>
-<li><p><strong>graph_type</strong> (<em>_type_</em>) – _description_</p></li>
-<li><p><strong>filename</strong> (<em>_type_</em>) – _description_</p></li>
+<li><p><strong>agent_count</strong> (<em>int</em>) – the number of agents in the model</p></li>
+<li><p><strong>graph_type</strong> (<em>string</em>) – the graph type to be created (watts, sf, newman, or barabasi)</p></li>
+<li><p><strong>filename</strong> (<em>string</em>) – the path to a text file that has the edges for the FCM graph</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>_description_</p>
+<dd class="field-even"><p>a graph for the ABM/FCM hybrid model</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>_type_</p>
+<dd class="field-odd"><p>networkx.Graph</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="cuda_hybrid.generate_model">
-<span class="sig-prename descclassname"><span class="pre">cuda_hybrid.</span></span><span class="sig-name descname"><span class="pre">generate_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">agent_count</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">graph_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">community_algorithm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cuda_hybrid.generate_model" title="Permalink to this definition"></a></dt>
-<dd><p>_summary_</p>
+<span class="sig-prename descclassname"><span class="pre">cuda_hybrid.</span></span><span class="sig-name descname"><span class="pre">generate_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">agent_count</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">graph_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">community_algorithm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cuda_hybrid.generate_model" title="Permalink to this definition">#</a></dt>
+<dd><p>Create a general model</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>agent_count</strong> (<em>_type_</em>) – _description_</p></li>
-<li><p><strong>filename</strong> (<em>_type_</em>) – _description_</p></li>
-<li><p><strong>graph_type</strong> (<em>_type_</em>) – _description_</p></li>
-<li><p><strong>community_algorithm</strong> (<em>_type_</em><em>, </em><em>optional</em>) – _description_, defaults to None</p></li>
+<li><p><strong>agent_count</strong> (<em>int</em>) – number of agents in the model</p></li>
+<li><p><strong>filename</strong> (<em>string</em>) – the path to a file that stores the edges for the FCM</p></li>
+<li><p><strong>graph_type</strong> (<em>string</em>) – the type of graphs, pick from watts, sf, newman, and barabasi</p></li>
+<li><p><strong>community_algorithm</strong> (<em>function</em><em>, </em><em>optional</em>) – community algorithm defaults to None</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>_description_</p>
+<dd class="field-even"><p>a HybridModel</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>_type_</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="cuda_hybrid.run_cuda">
-<span class="sig-prename descclassname"><span class="pre">cuda_hybrid.</span></span><span class="sig-name descname"><span class="pre">run_cuda</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hm</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">focus</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">iters</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">args</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">array([],</span> <span class="pre">dtype=int64)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">between_args</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">steps</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cuda_hybrid.run_cuda" title="Permalink to this definition"></a></dt>
-<dd><p>_summary_</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>hm</strong> (<em>_type_</em>) – _description_</p></li>
-<li><p><strong>focus</strong> (<em>_type_</em>) – _description_</p></li>
-<li><p><strong>threshold</strong> (<em>_type_</em>) – _description_</p></li>
-<li><p><strong>iters</strong> (<em>_type_</em>) – _description_</p></li>
-<li><p><strong>args</strong> (<em>_type_</em><em>, </em><em>optional</em>) – _description_, defaults to np.array([], dtype=int)</p></li>
-<li><p><strong>between_args</strong> (<em>list</em><em>, </em><em>optional</em>) – _description_, defaults to []</p></li>
-<li><p><strong>steps</strong> (<em>int</em><em>, </em><em>optional</em>) – _description_, defaults to 20</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>_description_</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>_type_</p>
+<dd class="field-odd"><p><a class="reference internal" href="#cuda_hybrid.HybridModel" title="cuda_hybrid.HybridModel">HybridModel</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -312,34 +454,50 @@ a dictionary that maps FCM lables to their indices in the FCM adjacency matrix, 
 </section>
 
 
-           </div>
-          </div>
-          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="tutorials/data_visualization.html" class="btn btn-neutral float-left" title="Data Visualization Using Seaborn" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="contribution.html" class="btn btn-neutral float-right" title="Contribution" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-    </div>
-
-  <hr/>
-
-  <div role="contentinfo">
-    <p>&#169; Copyright 2022, Kareem Ghumrawi, Philippe J. Giabbanelli.</p>
-  </div>
-
-  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    provided by <a href="https://readthedocs.org">Read the Docs</a>.
-   
-
-</footer>
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="tutorials/data_visualization.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Data Visualization</p>
         </div>
-      </div>
-    </section>
-  </div>
-  <script>
-      jQuery(function () {
-          SphinxRtdTheme.Navigation.enable(true);
-      });
-  </script> 
+    </a>
+    <a class='right-next' id="next-link" href="contribution.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Contribution</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Kareem Ghumrawi<br/>
+  
+      &copy; Copyright 2022, Kareem Ghumrawi, Philippe J. Giabbanelli.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
 
-</body>
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
 </html>

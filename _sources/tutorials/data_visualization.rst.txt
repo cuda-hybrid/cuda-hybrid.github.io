@@ -1,4 +1,4 @@
-Data Visualization Using Seaborn
+Data Visualization
 =================================
 
 After all data has been generated, a graph is usually created to help visualize the relationship and draw some conclusions
@@ -33,23 +33,24 @@ The file can be loaded to a panda dataframe using ``pandas.pd.read_csv()``:
 
     runs_data = pd.read_csv("obesity_serial.csv")
 
-The graph can be plotted and shown using both ``seaborn`` and ``matplotlib``. In this case, line plot is used:
+The graph can be plotted and shown using both ``seaborn`` and ``matplotlib``. In this case, line plot is used. The complete
+code is shown below:
 
 ..  code-block:: python
 
+    import seaborn as sns
     import pandas as pd
     import matplotlib.pyplot as plt
-
-    # Set the background theme for the graph
+    
+    runs = pd.read_csv("obesity_serial.csv")
     sns.set_style("darkgrid")
-    # Function to use line plot
-    sns.lineplot(data=runs, x="p", y="Average", hue="Type")
-    # To show the graph
+    sns.lineplot(data=runs, x="p", y="Obesity", hue="Network Type", 
+                err_style="bars")
     plt.show()
 
 The result graph is displayed below:
 
-..  image:: ../../../obesity_serial.svg
+..  image:: ../../../svg/serial_times.svg
 
 
 Comparing runtimes
@@ -64,7 +65,7 @@ The data are then organized into a csv file. The first five rows are displayed b
 ..  csv-table::
     :file: obesity_timeComp_cuda_sample.csv
 
-The complete csv file can be found here: :download:`obesity_parallel_gpu.csv<../../../obesity_parallel_gpu.csv>`
+The complete csv file can be found here: :download:`obesity_parallel_gpu.csv<../../../parallel_times.csv>`
 
 In order to use the above file for graphing, a pandas dataframe should be created and then ``seaborn`` and ``matplotlib``
 to graph it. Parameter ``hue`` can be set as ``Type`` to group the data. Parameter
@@ -82,7 +83,7 @@ to graph it. Parameter ``hue`` can be set as ``Type`` to group the data. Paramet
 
 The resulted graph is displayed below:
 
-..  image:: ../../../obesity_par_time_comp.svg
+..  image:: ../../../svg/parallel_times.svg
     
 There are different ways to organize the dataset to help with data Visualization. More details can be found on seaborn
 package page

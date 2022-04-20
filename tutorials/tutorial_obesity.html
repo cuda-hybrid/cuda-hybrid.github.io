@@ -1,96 +1,380 @@
-<!DOCTYPE html>
-<html class="writer-html5" lang="en" >
-<head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Customizing Models &mdash; cuda_hybrid 0.1 documentation</title>
-      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  <!--[if lt IE 9]>
-    <script src="../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
-        <script src="../_static/doctools.js"></script>
-    <script src="../_static/js/theme.js"></script>
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Customizing Models &#8212; cuda_hybrid  documentation</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=62ba249389abaaa9ffc34bf36a076bdc1d65ee18" type="text/css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=f31d14ad54b65d19161ba51d4ffff3a77ae00456"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Data Visualization Using Seaborn" href="data_visualization.html" />
-    <link rel="prev" title="Creating a Parallel Model" href="tutorial_parallel.html" /> 
-</head>
+    <link rel="next" title="Data Visualization" href="data_visualization.html" />
+    <link rel="prev" title="Parallel" href="tutorial_parallel.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
 
-<body class="wy-body-for-nav"> 
-  <div class="wy-grid-for-nav">
-    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
-      <div class="wy-side-scroll">
-        <div class="wy-side-nav-search" >
-            <a href="../index.html" class="icon icon-home"> cuda_hybrid
-          </a>
-<div role="search">
-  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
-    <input type="hidden" name="check_keywords" value="yes" />
-    <input type="hidden" name="area" value="default" />
-  </form>
-</div>
-        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
-<ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="index.html">Tutorials</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="tutorial_serial.html">Running a Model Serially</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tutorial_parallel.html">Creating a Parallel Model</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Customizing Models</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#creating-a-custom-graph">Creating a custom graph</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#fcm">FCM</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#abm">ABM</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="#running-the-simulation">Running the simulation</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#serial">Serial</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#parallel">Parallel</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="#data-visualization">Data Visualization</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="data_visualization.html">Data Visualization Using Seaborn</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../docs.html">Documentation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../contribution.html">Contribution</a></li>
-</ul>
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
 
-        </div>
-      </div>
-    </nav>
+    
+    <div class="container-fluid" id="banner"></div>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
-          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../index.html">cuda_hybrid</a>
-      </nav>
+    
 
-      <div class="wy-nav-content">
-        <div class="rst-content">
-          <div role="navigation" aria-label="Page navigation">
-  <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="index.html">Tutorials</a> &raquo;</li>
-      <li>Customizing Models</li>
-      <li class="wy-breadcrumbs-aside">
-            <a href="../_sources/tutorials/tutorial_obesity.rst.txt" rel="nofollow"> View page source</a>
-      </li>
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+      
+      
+      <h1 class="site-logo" id="site-title">cuda_hybrid  documentation</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Contents
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../installation.html">
+   Installation
+  </a>
+ </li>
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="index.html">
+   Tutorials
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2">
+    <a class="reference internal" href="tutorial_serial.html">
+     Serial
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="tutorial_parallel.html">
+     Parallel
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     Customizing Models
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="data_visualization.html">
+     Data Visualization
+    </a>
+   </li>
   </ul>
-  <hr/>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../docs.html">
+   Documentation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../contribution.html">
+   Contribution
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Theme by the <a href="https://ebp.jupyterbook.org">Executable Book Project</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
 </div>
-          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
-           <div itemprop="articleBody">
-             
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../_sources/tutorials/tutorial_obesity.rst.txt"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.rst</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#creating-a-custom-graph">
+   Creating a custom graph
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#fcm">
+     FCM
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#abm">
+     ABM
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#running-the-simulation">
+   Running the simulation
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#in-serial">
+     In Serial
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#in-parallel">
+     In Parallel
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#visualization">
+   Visualization
+  </a>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Customizing Models</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#creating-a-custom-graph">
+   Creating a custom graph
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#fcm">
+     FCM
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#abm">
+     ABM
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#running-the-simulation">
+   Running the simulation
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#in-serial">
+     In Serial
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#in-parallel">
+     In Parallel
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#visualization">
+   Visualization
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
   <section id="customizing-models">
-<h1>Customizing Models<a class="headerlink" href="#customizing-models" title="Permalink to this headline"></a></h1>
+<h1>Customizing Models<a class="headerlink" href="#customizing-models" title="Permalink to this headline">#</a></h1>
 <p>For the previous use case, the model is automatically generated by the package, where each concept of the FCM is randomly assigned
 a value between 0 and 1. However, in some cases, concepts might have different distributions or have different ways of being
 generated. This tutorial will show how to use the package in such cases by first illustrating how to create a customized ABM/FCM graph
@@ -103,9 +387,9 @@ to show how knowledge and social networks can affect the average obesity rate.
 However, in this tutorial, only the <strong>small world network</strong> and <strong>p</strong> of <strong>0.5</strong> will be utilized.
 These values can easily be changed by passing different arguments, which will be discussed in later steps.</p>
 <section id="creating-a-custom-graph">
-<h2>Creating a custom graph<a class="headerlink" href="#creating-a-custom-graph" title="Permalink to this headline"></a></h2>
+<h2>Creating a custom graph<a class="headerlink" href="#creating-a-custom-graph" title="Permalink to this headline">#</a></h2>
 <section id="fcm">
-<h3>FCM<a class="headerlink" href="#fcm" title="Permalink to this headline"></a></h3>
+<h3>FCM<a class="headerlink" href="#fcm" title="Permalink to this headline">#</a></h3>
 <p>For the FCM model, an instance of networkx.classes.digraph.DiGraph will need to be created, and each node must have an attribute <code class="docutils literal notranslate"><span class="pre">'val'</span></code>,
 so the node values can be accessed as followed: <code class="docutils literal notranslate"><span class="pre">graph.nodes['node_name']['val']</span></code></p>
 <p>There 13 concepts with 20 edges in this specific use case. The relationships between the concepts and their weights are given in
@@ -173,7 +457,7 @@ attribute can be added as below for each node:</p>
 <p>The last two files were also combined into one excel file: <a class="reference download internal" download="" href="../_downloads/967bf6bdb85f0614519922b2435fb05f/distributions_of_concepts.xlsx"><code class="xref download docutils literal notranslate"><span class="pre">distributions_of_concepts.xlsx</span></code></a></p>
 </section>
 <section id="abm">
-<h3>ABM<a class="headerlink" href="#abm" title="Permalink to this headline"></a></h3>
+<h3>ABM<a class="headerlink" href="#abm" title="Permalink to this headline">#</a></h3>
 <p>After having a function to create an FCM for each agent, an instance of <code class="docutils literal notranslate"><span class="pre">networkx.classes.graph.Graph</span></code> will be used for the ABM.
 The type of graph will depend on the model.
 Each agent, however, must have an <code class="docutils literal notranslate"><span class="pre">'FCM'</span></code> attribute that stores its FCM graph for the package to function correctly.
@@ -191,13 +475,13 @@ be passed as an argument to the constructor of the HybridModel to be used with t
 </section>
 </section>
 <section id="running-the-simulation">
-<h2>Running the simulation<a class="headerlink" href="#running-the-simulation" title="Permalink to this headline"></a></h2>
+<h2>Running the simulation<a class="headerlink" href="#running-the-simulation" title="Permalink to this headline">#</a></h2>
 <p>Running the simulation with a custom graph using the package is the same as running the simulation with a graph generated by
 <a class="reference internal" href="../docs.html#cuda_hybrid.create_graph" title="cuda_hybrid.create_graph"><code class="xref py py-func docutils literal notranslate"><span class="pre">create_graph</span></code></a> or <a class="reference internal" href="../docs.html#cuda_hybrid.generate_model" title="cuda_hybrid.generate_model"><code class="xref py py-func docutils literal notranslate"><span class="pre">generate_model</span></code></a>.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>For more details about serial run, please refer to <a class="reference internal" href="tutorial_serial.html#running-a-model-serially"><span class="std std-ref">the serial use case</span></a>.</p>
-<p>For more details about parallel run, please refer to <a class="reference internal" href="tutorial_parallel.html#creating-a-parallel-model"><span class="std std-ref">the parallel use case</span></a>.</p>
+<p>For more details about serial run, refer to <a class="reference internal" href="tutorial_serial.html#serial"><span class="std std-ref">the serial use case</span></a>.</p>
+<p>For more details about parallel run, refer to <a class="reference internal" href="tutorial_parallel.html#parallel"><span class="std std-ref">the parallel use case</span></a>.</p>
 </div>
 <p>In the paper, the simulation will be repeated for 10 times, each time for 20 steps. At every time step, each agent will only
 interact with one neighbor at random, and only the knowledge concept of the agents will participate in the interaction. If the value of the knowledge concept
@@ -205,8 +489,8 @@ from the influencing agent is greater than that of the influenced agent, the inf
 to accept the knowledge from the influencing agent and, thus, take on the same value,
 while if it is smaller, the probability of accepting is <code class="docutils literal notranslate"><span class="pre">1-</span> <span class="pre">p</span></code>. (More details about the interaction
 between agents can be found in the paper).</p>
-<section id="serial">
-<h3>Serial<a class="headerlink" href="#serial" title="Permalink to this headline"></a></h3>
+<section id="in-serial">
+<h3>In Serial<a class="headerlink" href="#in-serial" title="Permalink to this headline">#</a></h3>
 <p>The interaction function is provided below. It takes two arguments, <strong>HybridModel</strong> and the probability <strong>p</strong>, which
 will be 0.5 in this case (as mentioned above). However, the value of p can be changed to anything between 0 and 1.
 At the end the simulation is run using <code class="xref py py-func docutils literal notranslate"><span class="pre">run_serial</span></code>:</p>
@@ -242,61 +526,72 @@ At the end the simulation is run using <code class="xref py py-func docutils lit
 </div>
 <p>The average value of obesity is <code class="docutils literal notranslate"><span class="pre">0.927949481844901</span></code>.</p>
 </section>
-<section id="parallel">
-<h3>Parallel<a class="headerlink" href="#parallel" title="Permalink to this headline"></a></h3>
+<section id="in-parallel">
+<h3>In Parallel<a class="headerlink" href="#in-parallel" title="Permalink to this headline">#</a></h3>
 <p>The interaction function <code class="docutils literal notranslate"><span class="pre">f</span></code> is provided below:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nd">@cuda</span><span class="o">.</span><span class="n">jit</span><span class="p">()</span>
-<span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">hm</span><span class="p">):</span>
-    <span class="k">if</span> <span class="n">hm</span><span class="o">.</span><span class="n">ABM_adj</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">:</span>
-        <span class="k">return</span>
-    <span class="c1"># loop through each agent</span>
-    <span class="k">for</span> <span class="n">agent</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">hm</span><span class="o">.</span><span class="n">ABM_adj</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
-    <span class="c1"># grab the neighbors</span>
-        <span class="n">friend</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">hm</span><span class="o">.</span><span class="n">get_neighbors</span><span class="p">(</span><span class="n">agent</span><span class="p">))</span>
-        <span class="c1"># get the numeric index for Knowledge</span>
-        <span class="n">knowledgeIdx</span> <span class="o">=</span> <span class="n">hm</span><span class="o">.</span><span class="n">fcm_labels</span><span class="p">[</span><span class="s2">&quot;Knowledge&quot;</span><span class="p">]</span>
-        <span class="c1"># agents now influence each other</span>
-        <span class="n">hm</span><span class="o">.</span><span class="n">node_future_val</span><span class="p">[</span><span class="n">agent</span><span class="p">][</span><span class="n">knowledgeIdx</span><span class="p">]</span> <span class="o">=</span> <span class="n">knowledge_influence</span><span class="p">(</span>
-            <span class="n">hm</span><span class="o">.</span><span class="n">node_val</span><span class="p">[</span><span class="n">agent</span><span class="p">][</span><span class="n">knowledgeIdx</span><span class="p">],</span> <span class="n">hm</span><span class="o">.</span><span class="n">node_val</span><span class="p">[</span><span class="n">friend</span><span class="p">][</span><span class="n">knowledgeIdx</span><span class="p">]</span>
-        <span class="p">)</span>
+<span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">ABM_adj</span><span class="p">,</span> <span class="n">neighbors</span><span class="p">,</span> <span class="n">node_val</span><span class="p">,</span> <span class="n">node_future_val</span><span class="p">,</span> <span class="n">knowledgeIdx</span><span class="p">,</span> <span class="n">prob</span><span class="p">,</span> <span class="n">rng_states</span><span class="p">):</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">cuda</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="n">ABM_adj</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+    <span class="n">agent</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="c1"># knowledgeIdx = args[0]</span>
+    <span class="n">friend</span> <span class="o">=</span> <span class="n">neighbors</span><span class="p">[</span><span class="n">agent</span><span class="p">]</span>
+    <span class="c1"># prop = 0.0</span>
+    <span class="n">influenced</span> <span class="o">=</span> <span class="n">node_val</span><span class="p">[</span><span class="n">agent</span><span class="p">][</span><span class="n">knowledgeIdx</span><span class="p">]</span>
+    <span class="n">influencing</span> <span class="o">=</span> <span class="n">node_val</span><span class="p">[</span><span class="n">friend</span><span class="p">][</span><span class="n">knowledgeIdx</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">influencing</span> <span class="o">&gt;</span> <span class="n">influenced</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">xoroshiro128p_uniform_float64</span><span class="p">(</span><span class="n">rng_states</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">prob</span><span class="p">:</span>
+            <span class="n">node_future_val</span><span class="p">[</span><span class="n">agent</span><span class="p">][</span><span class="n">knowledgeIdx</span><span class="p">]</span> <span class="o">=</span> <span class="n">influencing</span>
+    <span class="k">elif</span> <span class="n">influencing</span> <span class="o">&lt;</span> <span class="n">influenced</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">xoroshiro128p_uniform_float64</span><span class="p">(</span><span class="n">rng_states</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">prob</span><span class="p">:</span>
+        <span class="n">node_future_val</span><span class="p">[</span><span class="n">agent</span><span class="p">][</span><span class="n">knowledgeIdx</span><span class="p">]</span> <span class="o">=</span> <span class="n">influencing</span>
+            <span class="p">)</span>
 </pre></div>
 </div>
-<p>The above function calls the obesity_interact helper function, which simulates the interacting rules between
-the influenced and the influencing agents:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nd">@cuda</span><span class="o">.</span><span class="n">jit</span><span class="p">()</span>
-<span class="k">def</span> <span class="nf">knowledge_influence</span><span class="p">(</span><span class="n">influenced</span><span class="p">,</span> <span class="n">influencing</span><span class="p">):</span>
-    <span class="n">probability</span> <span class="o">=</span> <span class="mf">0.5</span>
-    <span class="k">if</span> <span class="n">influencing</span> <span class="o">&gt;</span> <span class="n">influenced</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">probability</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">influencing</span>
-    <span class="k">elif</span> <span class="n">influencing</span> <span class="o">&lt;</span> <span class="n">influenced</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">probability</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">influencing</span>
-    <span class="k">return</span> <span class="n">influenced</span>
+<p>The above function is called from  the obesity_interact function. Since cuda function cannot be passed as an argument,
+another wrapper function will be required in order to run the interaction in parallel:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">obesity_interact</span><span class="p">(</span><span class="n">hm</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
+    <span class="n">TPB</span> <span class="o">=</span> <span class="p">(</span><span class="mi">32</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">blockspergrid_x</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">hm</span><span class="o">.</span><span class="n">ABM_adj</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">/</span> <span class="n">TPB</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">BPG</span> <span class="o">=</span> <span class="p">(</span><span class="n">blockspergrid_x</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="c1"># Pre select the neighbor that each agent will interact with</span>
+    <span class="n">neighbors</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">hm</span><span class="o">.</span><span class="n">neighbors</span><span class="p">))</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">neighbors</span><span class="p">)):</span>
+        <span class="n">neighbors</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">hm</span><span class="o">.</span><span class="n">neighbors</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+
+    <span class="n">neighbors</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">neighbors</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+    <span class="n">cu_ABM_adj</span> <span class="o">=</span> <span class="n">cuda</span><span class="o">.</span><span class="n">to_device</span><span class="p">(</span><span class="n">hm</span><span class="o">.</span><span class="n">ABM_adj</span><span class="p">)</span>
+    <span class="n">cu_FCM_adj</span> <span class="o">=</span> <span class="n">cuda</span><span class="o">.</span><span class="n">to_device</span><span class="p">(</span><span class="n">hm</span><span class="o">.</span><span class="n">FCM_adj</span><span class="p">)</span>
+    <span class="n">cu_neighbors</span> <span class="o">=</span> <span class="n">cuda</span><span class="o">.</span><span class="n">to_device</span><span class="p">(</span><span class="n">neighbors</span><span class="p">)</span>
+    <span class="n">knowledgeIdx</span> <span class="o">=</span> <span class="n">hm</span><span class="o">.</span><span class="n">fcm_labels</span><span class="p">[</span><span class="s2">&quot;Knowledge&quot;</span><span class="p">]</span>
+    <span class="n">rng_states</span> <span class="o">=</span> <span class="n">create_xoroshiro128p_states</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">42069</span><span class="p">)</span>
+    <span class="n">f</span><span class="p">[</span><span class="n">TPB</span><span class="p">,</span> <span class="n">BPG</span><span class="p">](</span><span class="n">cu_ABM_adj</span><span class="p">,</span> <span class="n">cu_neighbors</span><span class="p">,</span> <span class="n">hm</span><span class="o">.</span><span class="n">node_val</span><span class="p">,</span> <span class="n">hm</span><span class="o">.</span><span class="n">node_future_val</span><span class="p">,</span> <span class="n">knowledgeIdx</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">rng_states</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>Like in the previous parallel use case, every function that is used on the GPU will have to be annotated with <code class="docutils literal notranslate"><span class="pre">&#64;cuda.jit()</span></code>
-before the definition of the function. In this case, both <code class="docutils literal notranslate"><span class="pre">knowledge_influence</span></code> and <code class="docutils literal notranslate"><span class="pre">f</span></code> have the annotation</p>
+<p>Like in the previous parallel use case, every function that is used on the GPU should have the  <code class="docutils literal notranslate"><span class="pre">&#64;cuda.jit()</span></code> decoration.
+There should be another function that wraps the cuda function so that it can be passed to the model. This also allows
+a serial interaction function to be passed.</p>
 </div>
 <p>After that, arguments, including the hybrid model, a list of focus nodes, a list of thresholds for the focus nodes,
 the maximum number of iterations, a list of arguments for function f, and, optionally, the number of steps,
 will be passed to the cuda_main function to run the simulation. In the paper, the simulation was run for 20 steps, so
 the same thing is being done here:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cuda_main</span><span class="p">(</span><span class="n">hm</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;Obesity&quot;</span><span class="p">,</span> <span class="s2">&quot;Physical_Health&quot;</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">],</span> <span class="mi">10</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">hm</span><span class="p">]),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">),</span> <span class="mi">20</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">hm</span><span class="o">.</span><span class="n">run_parallel</span><span class="p">([</span><span class="s2">&quot;Obesity&quot;</span><span class="p">,</span> <span class="s2">&quot;Physical_Health&quot;</span><span class="p">],</span> <span class="p">[</span><span class="mf">.05</span><span class="p">,</span> <span class="mf">.05</span><span class="p">],</span> <span class="mi">10</span><span class="p">,</span> <span class="n">obesity_interact</span><span class="p">,</span> <span class="p">[</span><span class="n">hm</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">],</span> <span class="mi">20</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>The result for this is displayed as followed:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">average Obesity: 0.910130181814703</span>
-<span class="go">average Physical_Health: -0.8049388421362708</span>
-<span class="go">------ Time: 1293.4581656455994</span>
+<p>The result for Obesity concept and runtime are displayed as followed:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">average Obesity: 0.93019286</span>
+<span class="go">------ Time: 30.4581656455994</span>
 </pre></div>
 </div>
 </section>
 </section>
-<section id="data-visualization">
-<h2>Data Visualization<a class="headerlink" href="#data-visualization" title="Permalink to this headline"></a></h2>
+<section id="visualization">
+<h2>Visualization<a class="headerlink" href="#visualization" title="Permalink to this headline">#</a></h2>
 <p>The model can be run with different values of p, and the results for the average value for the Obesity concept
 after 10 replications with two different networks, small world network and scale-free network, are displayed below:</p>
 <img alt="../_images/obesity_serial.svg" src="../_images/obesity_serial.svg" /><div class="admonition note">
@@ -320,34 +615,50 @@ Berlin, Heidelberg.</p>
 </section>
 
 
-           </div>
-          </div>
-          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="tutorial_parallel.html" class="btn btn-neutral float-left" title="Creating a Parallel Model" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="data_visualization.html" class="btn btn-neutral float-right" title="Data Visualization Using Seaborn" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-    </div>
-
-  <hr/>
-
-  <div role="contentinfo">
-    <p>&#169; Copyright 2022, Kareem Ghumrawi, Philippe J. Giabbanelli.</p>
-  </div>
-
-  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    provided by <a href="https://readthedocs.org">Read the Docs</a>.
-   
-
-</footer>
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="tutorial_parallel.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Parallel</p>
         </div>
-      </div>
-    </section>
-  </div>
-  <script>
-      jQuery(function () {
-          SphinxRtdTheme.Navigation.enable(true);
-      });
-  </script> 
+    </a>
+    <a class='right-next' id="next-link" href="data_visualization.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Data Visualization</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Kareem Ghumrawi<br/>
+  
+      &copy; Copyright 2022, Kareem Ghumrawi, Philippe J. Giabbanelli.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
 
-</body>
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
 </html>

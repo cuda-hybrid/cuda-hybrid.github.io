@@ -129,9 +129,9 @@ Running the simulation with a custom graph using the package is the same as runn
 
 ..  note::
 
-    For more details about serial run, please refer to :ref:`the serial use case<Running a Model Serially>`.
+    For more details about serial run, refer to :ref:`the serial use case<Serial>`.
 
-    For more details about parallel run, please refer to :ref:`the parallel use case<Creating a Parallel Model>`.
+    For more details about parallel run, refer to :ref:`the parallel use case<Parallel>`.
 
 In the paper, the simulation will be repeated for 10 times, each time for 20 steps. At every time step, each agent will only
 interact with one neighbor at random, and only the knowledge concept of the agents will participate in the interaction. If the value of the knowledge concept 
@@ -140,8 +140,8 @@ to accept the knowledge from the influencing agent and, thus, take on the same v
 while if it is smaller, the probability of accepting is ``1- p``. (More details about the interaction
 between agents can be found in the paper).
 
-Serial
-~~~~~~
+In Serial
+~~~~~~~~~
 The interaction function is provided below. It takes two arguments, **HybridModel** and the probability **p**, which
 will be 0.5 in this case (as mentioned above). However, the value of p can be changed to anything between 0 and 1.
 At the end the simulation is run using :func:`run_serial<cuda_hybrid.run_serial>`:
@@ -179,48 +179,60 @@ At the end the simulation is run using :func:`run_serial<cuda_hybrid.run_serial>
     
 The average value of obesity is ``0.927949481844901``.
 
-Parallel
-~~~~~~~~
+In Parallel
+~~~~~~~~~~~~
 
 The interaction function ``f`` is provided below:
 
 ..  code-block:: python
     
     @cuda.jit()
-    def f(hm):
-        if hm.ABM_adj.shape[0] <= 1:
-            return
-        # loop through each agent
-        for agent in range(hm.ABM_adj.shape[0]):
-        # grab the neighbors
-            friend = random.choice(hm.get_neighbors(agent))
-            # get the numeric index for Knowledge
-            knowledgeIdx = hm.fcm_labels["Knowledge"]
-            # agents now influence each other
-            hm.node_future_val[agent][knowledgeIdx] = knowledge_influence(
-                hm.node_val[agent][knowledgeIdx], hm.node_val[friend][knowledgeIdx]
-            )
+    def f(ABM_adj, neighbors, node_val, node_future_val, knowledgeIdx, prob, rng_states):
+        x = cuda.grid(1)
+        if x < ABM_adj.shape[0]:
+        agent = int(x)
+        # knowledgeIdx = args[0]
+        friend = neighbors[agent]
+        # prop = 0.0
+        influenced = node_val[agent][knowledgeIdx]
+        influencing = node_val[friend][knowledgeIdx]
+        if influencing > influenced:
+            if xoroshiro128p_uniform_float64(rng_states, x) < prob:
+                node_future_val[agent][knowledgeIdx] = influencing
+        elif influencing < influenced:
+            if xoroshiro128p_uniform_float64(rng_states, x) < 1 - prob:
+            node_future_val[agent][knowledgeIdx] = influencing
+                )
 
-The above function calls the obesity_interact helper function, which simulates the interacting rules between
-the influenced and the influencing agents:
+The above function is called from  the obesity_interact function. Since cuda function cannot be passed as an argument,
+another wrapper function will be required in order to run the interaction in parallel:
 
 ..  code-block:: python
     
-    @cuda.jit()
-    def knowledge_influence(influenced, influencing):
-        probability = 0.5
-        if influencing > influenced:
-            if random.random() < probability:
-                return influencing
-        elif influencing < influenced:
-            if random.random() < 1 - probability:
-                return influencing
-        return influenced
+    def obesity_interact(hm, p):
+        TPB = (32, 1)
+        blockspergrid_x = math.ceil(hm.ABM_adj.shape[0] / TPB[0])
+        BPG = (blockspergrid_x, 1)
+
+        # Pre select the neighbor that each agent will interact with
+        neighbors = np.zeros(len(hm.neighbors))
+        
+        for i in range(len(neighbors)):
+            neighbors[i] = np.random.choice(hm.neighbors[i])
+            
+        neighbors = np.array(neighbors, dtype=int)
+        cu_ABM_adj = cuda.to_device(hm.ABM_adj)
+        cu_FCM_adj = cuda.to_device(hm.FCM_adj)
+        cu_neighbors = cuda.to_device(neighbors)
+        knowledgeIdx = hm.fcm_labels["Knowledge"]
+        rng_states = create_xoroshiro128p_states(1, seed=42069)
+        f[TPB, BPG](cu_ABM_adj, cu_neighbors, hm.node_val, hm.node_future_val, knowledgeIdx, p, rng_states)
 
 ..  warning::
 
-    Like in the previous parallel use case, every function that is used on the GPU will have to be annotated with ``@cuda.jit()``
-    before the definition of the function. In this case, both ``knowledge_influence`` and ``f`` have the annotation
+    Like in the previous parallel use case, every function that is used on the GPU should have the  ``@cuda.jit()`` decoration.
+    There should be another function that wraps the cuda function so that it can be passed to the model. This also allows
+    a serial interaction function to be passed.
 
 After that, arguments, including the hybrid model, a list of focus nodes, a list of thresholds for the focus nodes,
 the maximum number of iterations, a list of arguments for function f, and, optionally, the number of steps, 
@@ -229,24 +241,23 @@ the same thing is being done here:
 
 ..  code-block:: python
 
-    cuda_main(hm, ["Obesity", "Physical_Health"], [0.05, 0.05], 10, np.array([hm]), dtype=int), 20)
+    hm.run_parallel(["Obesity", "Physical_Health"], [.05, .05], 10, obesity_interact, [hm, 0.5], 20)
 
 
-The result for this is displayed as followed:
+The result for Obesity concept and runtime are displayed as followed:
 
 ..  code-block:: console
 
-    average Obesity: 0.910130181814703
-    average Physical_Health: -0.8049388421362708
-    ------ Time: 1293.4581656455994
+    average Obesity: 0.93019286
+    ------ Time: 30.4581656455994
 
-Data Visualization
+Visualization
 -----------------------
 
 The model can be run with different values of p, and the results for the average value for the Obesity concept
 after 10 replications with two different networks, small world network and scale-free network, are displayed below:
 
-..  image:: ../../../obesity_serial.svg
+..  image:: ../../../svg/obesity_serial.svg
 
 ..  note::
 
