@@ -6,7 +6,7 @@ about the dataset. This document will show how to do this using ``seaborn`` pack
 
 The use case described here is from the paper 
 *Modelling the Joint Effect of Social Determinants and Peers on Obesity Among Canadian Adults* which is described 
-in :ref:`Customizing Models`. The model used in the paper will be referred as obesity model.
+in :ref:`Customizing Node Values`. The model used in the paper will be referred as obesity model.
 
 .. Creating graphs:
 

@@ -114,7 +114,12 @@
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="tutorials/tutorial_obesity.html">
-     Customizing Models
+     Customizing Node Values
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="tutorials/tutorial_extending.html">
+     Extending FCM
     </a>
    </li>
    <li class="toctree-l2">
@@ -272,18 +277,35 @@ title="Print to PDF"
 <span id="documentation"></span><h1>Documentation<a class="headerlink" href="#module-cuda_hybrid" title="Permalink to this headline">#</a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="cuda_hybrid.HybridModel">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">cuda_hybrid.</span></span><span class="sig-name descname"><span class="pre">HybridModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ABM</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">networkx.classes.graph.Graph</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">community_algorithm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cuda_hybrid.HybridModel" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">cuda_hybrid.</span></span><span class="sig-name descname"><span class="pre">HybridModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ABM</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">networkx.classes.graph.Graph</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cuda_hybrid.HybridModel" title="Permalink to this definition">#</a></dt>
 <dd><p>Create a ABM/FCM hybrid model for simulation based on a created the graph
 Each node of the ABM graph will have an ‘FCM’ attribute that points to an FCM graph.
 Each node of an FCM graph will have a ‘val’ attribute that has the value of that node.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>ABM</strong> (<em>networkx.Graph</em>) – The ABM/FCM graph created using networkx</p></li>
-<li><p><strong>community_algorithm</strong> (<em>function</em><em>, </em><em>optional</em>) – algorithm to create communities among agents, defaults to None, not necessary for serial version</p></li>
-</ul>
+<dd class="field-odd"><p><strong>ABM</strong> (<em>networkx.Graph</em>) – The ABM/FCM graph created using networkx</p>
 </dd>
 </dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="cuda_hybrid.HybridModel.generate_communities">
+<span class="sig-name descname"><span class="pre">generate_communities</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">community_algo</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cuda_hybrid.HybridModel.generate_communities" title="Permalink to this definition">#</a></dt>
+<dd><p>_summary_</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ABM</strong> (<em>_type_</em>) – _description_</p></li>
+<li><p><strong>community_algo</strong> (<em>_type_</em>) – _description_</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>_description_</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>_type_</p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="cuda_hybrid.HybridModel.get_neighbors">
 <span class="sig-name descname"><span class="pre">get_neighbors</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span></span></span><a class="headerlink" href="#cuda_hybrid.HybridModel.get_neighbors" title="Permalink to this definition">#</a></dt>
@@ -325,7 +347,31 @@ the simulation</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="cuda_hybrid.HybridModel.run_parallel">
-<span class="sig-name descname"><span class="pre">run_parallel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">focus</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">iters</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">func</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">steps</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cuda_hybrid.HybridModel.run_parallel" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">run_parallel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">focus</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">iters</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">func</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">steps</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">with_community</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">community_algo</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cuda_hybrid.HybridModel.run_parallel" title="Permalink to this definition">#</a></dt>
+<dd><p>Run the interaction function and stabelize each FCM in parallel for each step</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>focus</strong> (<em>list</em>) – list concept names to stabilize</p></li>
+<li><p><strong>threshold</strong> (<em>list</em>) – stabilization thresholds for corresponding focus nodes</p></li>
+<li><p><strong>iters</strong> (<em>int</em>) – maximum amount of times to iterate</p></li>
+<li><p><strong>func</strong> (<em>function</em>) – interaction function between agents</p></li>
+<li><p><strong>args</strong> (<em>list</em>) – list of arguments for interaction function</p></li>
+<li><p><strong>steps</strong> (<em>int</em>) – number of steps of the simulation</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>average values for each focus concept</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cuda_hybrid.HybridModel.run_parallel_community">
+<span class="sig-name descname"><span class="pre">run_parallel_community</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">focus</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">iters</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">func</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">steps</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">community_algo</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cuda_hybrid.HybridModel.run_parallel_community" title="Permalink to this definition">#</a></dt>
 <dd><p>Run the interaction function and stabelize each FCM in parallel for each step</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -373,9 +419,9 @@ the simulation</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="cuda_hybrid.HybridModel.transformNetwork">
-<span class="sig-name descname"><span class="pre">transformNetwork</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">nptyping.types._ndarray.NDArray</span><span class="p"><span class="pre">[</span></span><span class="pre">None</span><span class="p"><span class="pre">,</span> </span><span class="pre">nptyping.types._number.Float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span> </span><span class="pre">nptyping.types._ndarray.NDArray</span><span class="p"><span class="pre">[</span></span><span class="pre">None</span><span class="p"><span class="pre">,</span> </span><span class="pre">nptyping.types._number.Float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span> </span><span class="pre">numba.typed.typeddict.Dict</span><span class="p"><span class="pre">,</span> </span><span class="pre">nptyping.types._ndarray.NDArray</span><span class="p"><span class="pre">[</span></span><span class="pre">None</span><span class="p"><span class="pre">,</span> </span><span class="pre">nptyping.types._number.Float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span> </span><span class="pre">nptyping.types._ndarray.NDArray</span><span class="p"><span class="pre">[</span></span><span class="pre">None</span><span class="p"><span class="pre">,</span> </span><span class="pre">nptyping.types._number.Float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#cuda_hybrid.HybridModel.transformNetwork" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">transformNetwork</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">G</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">networkx.classes.graph.Graph</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">nptyping.types._ndarray.NDArray</span><span class="p"><span class="pre">[</span></span><span class="pre">None</span><span class="p"><span class="pre">,</span> </span><span class="pre">nptyping.types._number.Float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span> </span><span class="pre">nptyping.types._ndarray.NDArray</span><span class="p"><span class="pre">[</span></span><span class="pre">None</span><span class="p"><span class="pre">,</span> </span><span class="pre">nptyping.types._number.Float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span> </span><span class="pre">numba.typed.typeddict.Dict</span><span class="p"><span class="pre">,</span> </span><span class="pre">nptyping.types._ndarray.NDArray</span><span class="p"><span class="pre">[</span></span><span class="pre">None</span><span class="p"><span class="pre">,</span> </span><span class="pre">nptyping.types._number.Float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span> </span><span class="pre">nptyping.types._ndarray.NDArray</span><span class="p"><span class="pre">[</span></span><span class="pre">None</span><span class="p"><span class="pre">,</span> </span><span class="pre">nptyping.types._number.Float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#cuda_hybrid.HybridModel.transformNetwork" title="Permalink to this definition">#</a></dt>
 <dd><p>Use the networkx.Graph provided to extract information, including ABM and FCM adjacency matrices,
-a dictionary that maps FCM lables to their indices in the FCM adjacency matrix, community</p>
+a dictionary that maps FCM lables to their indices in the FCM adjacency matrix, along with other information</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>G</strong> (<em>networkx.Graph</em>) – networkx graph to be transformed</p>
@@ -384,7 +430,7 @@ a dictionary that maps FCM lables to their indices in the FCM adjacency matrix, 
 <dd class="field-even"><p>adjacency matrix, fcm_labels for each node in each agent’s FCM, numpy matrix with FCM values for each agent, numpy matrix with future FCM values for each agent, numpy adjacency matrix with FCM edge weights</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>Tuple[ NDArray[Float64], NDArray[Float64], Dict, NDArray[Float64], NDArray[Float64] ]</p>
+<dd class="field-odd"><p>Tuple[ NDArray[Float64], NDArray[Float64], Dict, NDArray[Float64], NDArray[Float64], Dict</p>
 </dd>
 </dl>
 </dd></dl>
@@ -431,7 +477,7 @@ a dictionary that maps FCM lables to their indices in the FCM adjacency matrix, 
 
 <dl class="py function">
 <dt class="sig sig-object py" id="cuda_hybrid.generate_model">
-<span class="sig-prename descclassname"><span class="pre">cuda_hybrid.</span></span><span class="sig-name descname"><span class="pre">generate_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">agent_count</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">graph_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">community_algorithm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cuda_hybrid.generate_model" title="Permalink to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">cuda_hybrid.</span></span><span class="sig-name descname"><span class="pre">generate_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">agent_count</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">graph_type</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cuda_hybrid.generate_model" title="Permalink to this definition">#</a></dt>
 <dd><p>Create a general model</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -439,7 +485,6 @@ a dictionary that maps FCM lables to their indices in the FCM adjacency matrix, 
 <li><p><strong>agent_count</strong> (<em>int</em>) – number of agents in the model</p></li>
 <li><p><strong>filename</strong> (<em>string</em>) – the path to a file that stores the edges for the FCM</p></li>
 <li><p><strong>graph_type</strong> (<em>string</em>) – the type of graphs, pick from watts, sf, newman, and barabasi</p></li>
-<li><p><strong>community_algorithm</strong> (<em>function</em><em>, </em><em>optional</em>) – community algorithm defaults to None</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>

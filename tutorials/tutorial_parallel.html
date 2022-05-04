@@ -33,7 +33,7 @@
     <script src="../_static/scripts/sphinx-book-theme.js?digest=f31d14ad54b65d19161ba51d4ffff3a77ae00456"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Customizing Models" href="tutorial_obesity.html" />
+    <link rel="next" title="Customizing Node Values" href="tutorial_obesity.html" />
     <link rel="prev" title="Serial" href="tutorial_serial.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
@@ -114,7 +114,12 @@
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="tutorial_obesity.html">
-     Customizing Models
+     Customizing Node Values
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="tutorial_extending.html">
+     Extending FCM
     </a>
    </li>
    <li class="toctree-l2">
@@ -271,106 +276,85 @@ title="Print to PDF"
   <section id="parallel">
 <h1>Parallel<a class="headerlink" href="#parallel" title="Permalink to this headline">#</a></h1>
 <p>The model used here is similar to the one in the serial use case, except that the
-simulation will be run for 100 steps and there will be 100 agents. This is to show the difference
+simulation will be run for 100 steps and there will be 1000 agents. This is to show the difference
 between the runtimes of the two versions.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>For more details about the model, please refer to <a class="reference internal" href="tutorial_serial.html#serial"><span class="std std-ref">the serial use case</span></a>.</p>
 </div>
-<p>In a python file, import the <a class="reference internal" href="../docs.html#cuda_hybrid.generate_model" title="cuda_hybrid.generate_model"><code class="xref py py-func docutils literal notranslate"><span class="pre">generate_model</span></code></a>
-and <code class="xref py py-func docutils literal notranslate"><span class="pre">cuda_main</span></code> methods from the package:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">cuda_hybrid</span> <span class="kn">import</span> <span class="n">generate_model</span><span class="p">,</span> <span class="n">cuda_main</span>
+<p>In a python file, import the module:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">cuda_hybrid</span> <span class="k">as</span> <span class="nn">md</span>
 </pre></div>
 </div>
-<p>The model will be built using <a class="reference internal" href="../docs.html#cuda_hybrid.generate_model" title="cuda_hybrid.generate_model"><code class="xref py py-func docutils literal notranslate"><span class="pre">generate_model</span></code></a>:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">hm</span> <span class="o">=</span> <span class="n">generate_model</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="s1">&#39;insurgency.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;watts&#39;</span><span class="p">,</span> <span class="n">nx</span><span class="o">.</span><span class="n">community</span><span class="o">.</span><span class="n">label_propagation_communities</span><span class="p">)</span>
+<p>The model can be built using <a class="reference internal" href="../docs.html#cuda_hybrid.generate_model" title="cuda_hybrid.generate_model"><code class="xref py py-func docutils literal notranslate"><span class="pre">generate_model</span></code></a>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">hm</span> <span class="o">=</span> <span class="n">generate_model</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="s1">&#39;insurgency_simple.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;watts&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>After that, get the indices of the nodes that will participate in the interactions between agents:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">econIdx</span> <span class="o">=</span> <span class="n">hm</span><span class="o">.</span><span class="n">fcm_labels</span><span class="p">[</span><span class="s1">&#39;EconomicDevelopment&#39;</span><span class="p">]</span>
-<span class="n">insurIdx</span> <span class="o">=</span> <span class="n">hm</span><span class="o">.</span><span class="n">fcm_labels</span><span class="p">[</span><span class="s2">&quot;AbilityOfInsurgentsToControlThePopulation&quot;</span><span class="p">]</span>
+<p>After that, create interaction function. There can be multiple helper functions, but everything should be wrapped
+in one function only to passed as an argument. For this tutorial, the interaction is serial, while the FCMs will be run
+in parallel. These functions are exactly the same as the ones in <a class="reference internal" href="tutorial_serial.html#serial"><span class="std std-ref">Serial</span></a></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">econ_influence</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="n">influencing</span><span class="p">):</span>
+    <span class="n">threshold</span> <span class="o">=</span> <span class="mi">10</span>
+    <span class="n">impact</span> <span class="o">=</span> <span class="mi">5</span>
+    <span class="n">avg</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="n">influencing</span><span class="p">:</span>
+        <span class="n">avg</span> <span class="o">+=</span> <span class="n">num</span>
+    <span class="n">lowerThresh</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">threshold</span> <span class="o">/</span> <span class="mf">100.0</span>
+    <span class="n">upperThresh</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">threshold</span> <span class="o">/</span> <span class="mf">100.0</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">val</span>
+    <span class="k">if</span> <span class="n">avg</span> <span class="o">&gt;</span> <span class="n">val</span> <span class="o">*</span> <span class="n">upperThresh</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">+=</span> <span class="n">val</span> <span class="o">*</span> <span class="n">impact</span> <span class="o">/</span> <span class="mf">100.0</span>
+    <span class="k">elif</span> <span class="n">avg</span> <span class="o">&lt;</span> <span class="n">val</span> <span class="o">*</span> <span class="n">lowerThresh</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">-=</span> <span class="n">val</span> <span class="o">*</span> <span class="n">impact</span> <span class="o">/</span> <span class="mf">100.0</span>
+    <span class="k">return</span> <span class="n">result</span>
+
+<span class="k">def</span> <span class="nf">insurgency_influence</span><span class="p">(</span><span class="n">influencedVal</span><span class="p">,</span> <span class="n">influencing</span><span class="p">):</span>
+    <span class="n">rate</span> <span class="o">=</span> <span class="mf">0.1</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">influencedVal</span>
+    <span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="n">influencing</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">-=</span> <span class="n">rate</span> <span class="o">*</span> <span class="n">num</span>
+    <span class="k">return</span> <span class="n">result</span>
+
+<span class="k">def</span> <span class="nf">insurgency_interact</span><span class="p">(</span><span class="n">hm</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">hm</span><span class="o">.</span><span class="n">ABM_adj</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">return</span>
+    <span class="c1"># loop through each agent</span>
+    <span class="k">for</span> <span class="n">agent</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">hm</span><span class="o">.</span><span class="n">ABM_adj</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+        <span class="c1"># grab the neighbors</span>
+        <span class="n">friends</span> <span class="o">=</span> <span class="n">hm</span><span class="o">.</span><span class="n">get_neighbors</span><span class="p">(</span><span class="n">agent</span><span class="p">)</span>
+        <span class="c1"># get the numeric index for EconomicDevelopment and AbilityOfInsurgentsToControlThePopulation</span>
+        <span class="n">econIdx</span> <span class="o">=</span> <span class="n">hm</span><span class="o">.</span><span class="n">fcm_labels</span><span class="p">[</span><span class="s2">&quot;EconomicDevelopment&quot;</span><span class="p">]</span>
+        <span class="n">insurgeIdx</span> <span class="o">=</span> <span class="n">hm</span><span class="o">.</span><span class="n">fcm_labels</span><span class="p">[</span><span class="s2">&quot;AbilityOfInsurgentsToControlThePopulation&quot;</span><span class="p">]</span>
+        <span class="n">econList</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">insurgeList</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="c1"># get the list of values for all the neighbors for the two concepts</span>
+        <span class="k">for</span> <span class="n">friend</span> <span class="ow">in</span> <span class="n">friends</span><span class="p">:</span>
+            <span class="n">econList</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">hm</span><span class="o">.</span><span class="n">node_val</span><span class="p">[</span><span class="n">friend</span><span class="p">][</span><span class="n">econIdx</span><span class="p">])</span>
+            <span class="n">insurgeList</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">hm</span><span class="o">.</span><span class="n">node_val</span><span class="p">[</span><span class="n">friend</span><span class="p">][</span><span class="n">insurgeIdx</span><span class="p">])</span>
+        <span class="c1"># agents now influence each other</span>
+        <span class="n">hm</span><span class="o">.</span><span class="n">node_future_val</span><span class="p">[</span><span class="n">agent</span><span class="p">][</span><span class="n">econIdx</span><span class="p">]</span> <span class="o">=</span> <span class="n">econ_influence</span><span class="p">(</span>
+                <span class="n">hm</span><span class="o">.</span><span class="n">node_val</span><span class="p">[</span><span class="n">agent</span><span class="p">][</span><span class="n">econIdx</span><span class="p">],</span>
+                <span class="n">econList</span>
+        <span class="p">)</span>
+        <span class="n">hm</span><span class="o">.</span><span class="n">node_future_val</span><span class="p">[</span><span class="n">agent</span><span class="p">][</span><span class="n">econIdx</span><span class="p">]</span> <span class="o">=</span> <span class="n">insurgency_influence</span><span class="p">(</span>
+                <span class="n">hm</span><span class="o">.</span><span class="n">node_future_val</span><span class="p">[</span><span class="n">agent</span><span class="p">][</span><span class="n">econIdx</span><span class="p">],</span>
+                <span class="n">insurgeList</span>
+        <span class="p">)</span>
 </pre></div>
 </div>
-<p>and then pass them, along with other arguments, which includes the hybridmodel object,
-a list of focus nodes, a list of thresholds for the focus nodes, the maximun number of iterations for FCM, a numpy array
-of arguments for the interaction functions, and optionally, number of steps, to the <code class="xref py py-func docutils literal notranslate"><span class="pre">cuda_main</span></code>:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">hm</span><span class="o">.</span><span class="n">run_parallel</span><span class="p">([</span><span class="s1">&#39;Rebelliousness&#39;</span><span class="p">],</span> <span class="p">[</span><span class="mf">.05</span><span class="p">],</span> <span class="mi">10</span><span class="p">,</span> <span class="n">insurgency_interact</span><span class="p">,</span> <span class="p">[</span><span class="n">hm</span><span class="p">],</span> <span class="mi">20</span><span class="p">)</span>
+<p>The <code class="docutils literal notranslate"><span class="pre">insurgency_interact</span></code> can then be passed to <a class="reference internal" href="../docs.html#cuda_hybrid.HybridModel.run_parallel" title="cuda_hybrid.HybridModel.run_parallel"><code class="xref py py-meth docutils literal notranslate"><span class="pre">run_parallel</span></code></a>, along with other arguments, which includes the hybridmodel object,
+a list of focus nodes, a list of thresholds for the focus nodes, the maximum number of iterations for the FCMs, and, optionally,
+number of steps.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">hm</span><span class="o">.</span><span class="n">run_parallel</span><span class="p">([</span><span class="s2">&quot;Rebelliousness&quot;</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.05</span><span class="p">],</span> <span class="mi">10</span><span class="p">,</span> <span class="n">insurgency_interact</span><span class="p">,</span> <span class="p">[</span><span class="n">hm</span><span class="p">],</span> <span class="mi">100</span><span class="p">)[</span><span class="s2">&quot;Rebelliousness&quot;</span><span class="p">])</span>
 </pre></div>
 </div>
-<p>Five first line of results are displayed below:</p>
-<table class="table" id="id1">
-<caption><span class="caption-text">Intput</span><a class="headerlink" href="#id1" title="Permalink to this table">#</a></caption>
-<colgroup>
-<col style="width: 33%" />
-<col style="width: 33%" />
-<col style="width: 33%" />
-</colgroup>
-<thead>
-<tr class="row-odd"><th class="head"><p>ED</p></th>
-<th class="head"><p>R</p></th>
-<th class="head"><p>AICP</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>4.564926326274871826e-01</p></td>
-<td><p>2.775330543518066406e-01</p></td>
-<td><p>4.507533609867095947e-01</p></td>
-</tr>
-<tr class="row-odd"><td><p>9.663465619087219238e-01</p></td>
-<td><p>9.071657061576843262e-01</p></td>
-<td><p>5.098578929901123047e-01</p></td>
-</tr>
-<tr class="row-even"><td><p>7.286615371704101562e-01</p></td>
-<td><p>9.334620088338851929e-02</p></td>
-<td><p>7.892300486564636230e-01</p></td>
-</tr>
-<tr class="row-odd"><td><p>1.165298745036125183e-01</p></td>
-<td><p>5.919184088706970215e-01</p></td>
-<td><p>5.640574097633361816e-01</p></td>
-</tr>
-<tr class="row-even"><td><p>9.065104126930236816e-01</p></td>
-<td><p>8.411430120468139648e-01</p></td>
-<td><p>5.168997645378112793e-01</p></td>
-</tr>
-</tbody>
-</table>
-<table class="table" id="id2">
-<caption><span class="caption-text">Output</span><a class="headerlink" href="#id2" title="Permalink to this table">#</a></caption>
-<colgroup>
-<col style="width: 33%" />
-<col style="width: 33%" />
-<col style="width: 33%" />
-</colgroup>
-<thead>
-<tr class="row-odd"><th class="head"><p>ED</p></th>
-<th class="head"><p>R</p></th>
-<th class="head"><p>AICP</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>8.268030285835266113e-01</p></td>
-<td><p>5.754823684692382812e-01</p></td>
-<td><p>6.590460538864135742e-01</p></td>
-</tr>
-<tr class="row-odd"><td><p>8.268030285835266113e-01</p></td>
-<td><p>5.754823684692382812e-01</p></td>
-<td><p>6.590460538864135742e-01</p></td>
-</tr>
-<tr class="row-even"><td><p>8.268030285835266113e-01</p></td>
-<td><p>5.754823684692382812e-01</p></td>
-<td><p>6.590460538864135742e-01</p></td>
-</tr>
-<tr class="row-odd"><td><p>8.268030285835266113e-01</p></td>
-<td><p>5.754823684692382812e-01</p></td>
-<td><p>6.590460538864135742e-01</p></td>
-</tr>
-</tbody>
-</table>
+<p>The function <a class="reference internal" href="../docs.html#cuda_hybrid.HybridModel.run_parallel" title="cuda_hybrid.HybridModel.run_parallel"><code class="xref py py-func docutils literal notranslate"><span class="pre">run_parallel</span></code></a> will return an average values across all agents
+for all the focus nodes. The results of the above simulation is shown below:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
 <p>The recorded time of the parallel version was <code class="docutils literal notranslate"><span class="pre">1.3296318054199219</span></code> seconds,
 while that of the serial version was <code class="docutils literal notranslate"><span class="pre">5.328189849853516</span></code> seconds.</p>
-<p>The complete files for the input and output can be found here:</p>
-<p><a class="reference download internal" download="" href="../_downloads/b50fca7e125087f3960e5b9f74dcf39a/out_100.csv"><code class="xref download docutils literal notranslate"><span class="pre">output.csv</span></code></a></p>
-<p><a class="reference download internal" download="" href="../_downloads/291c80fb76e7916ceb35345871a0a23e/insurgency_100.csv"><code class="xref download docutils literal notranslate"><span class="pre">input.csv</span></code></a></p>
 </section>
 
 
@@ -391,7 +375,7 @@ while that of the serial version was <code class="docutils literal notranslate">
     <a class='right-next' id="next-link" href="tutorial_obesity.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Customizing Models</p>
+        <p class="prev-next-title">Customizing Node Values</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>

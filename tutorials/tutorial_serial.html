@@ -114,7 +114,12 @@
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="tutorial_obesity.html">
-     Customizing Models
+     Customizing Node Values
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="tutorial_extending.html">
+     Extending FCM
     </a>
    </li>
    <li class="toctree-l2">
@@ -373,64 +378,6 @@ is set to 20 by default. The arguments for the interaction function must be put 
 <span class="nb">print</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">timeit</span><span class="p">(</span><span class="mi">20</span><span class="p">))</span>
 </pre></div>
 </div>
-<p>The results are displayed below:</p>
-<table class="table" id="id1">
-<caption><span class="caption-text">Intput</span><a class="headerlink" href="#id1" title="Permalink to this table">#</a></caption>
-<colgroup>
-<col style="width: 25%" />
-<col style="width: 25%" />
-<col style="width: 25%" />
-<col style="width: 25%" />
-</colgroup>
-<thead>
-<tr class="row-odd"><th class="head stub"></th>
-<th class="head"><p>ED</p></th>
-<th class="head"><p>R</p></th>
-<th class="head"><p>AICP</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><th class="stub"><p>Agent 1</p></th>
-<td><p>0.18018126</p></td>
-<td><p>0.27159387</p></td>
-<td><p>0.58096266</p></td>
-</tr>
-<tr class="row-odd"><th class="stub"><p>Agent 2</p></th>
-<td><p>0.6586693</p></td>
-<td><p>0.05659913</p></td>
-<td><p>0.4982664</p></td>
-</tr>
-</tbody>
-</table>
-<table class="table" id="id2">
-<caption><span class="caption-text">Output</span><a class="headerlink" href="#id2" title="Permalink to this table">#</a></caption>
-<colgroup>
-<col style="width: 25%" />
-<col style="width: 25%" />
-<col style="width: 25%" />
-<col style="width: 25%" />
-</colgroup>
-<thead>
-<tr class="row-odd"><th class="head stub"></th>
-<th class="head"><p>ED</p></th>
-<th class="head"><p>R</p></th>
-<th class="head"><p>AICP</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><th class="stub"><p>Agent 1</p></th>
-<td><p>-0.5718537569</p></td>
-<td><p>0.8349754810</p></td>
-<td><p>0.5809626579</p></td>
-</tr>
-<tr class="row-odd"><th class="stub"><p>Agent2</p></th>
-<td><p>-0.4529280066</p></td>
-<td><p>0.7985192537</p></td>
-<td><p>0.4982663989</p></td>
-</tr>
-</tbody>
-</table>
-<p>The recorded time was on average <code class="docutils literal notranslate"><span class="pre">1.35</span> <span class="pre">ms</span></code> seconds.</p>
 <p>Another way to record time is to use <code class="docutils literal notranslate"><span class="pre">%timeit</span></code> and <code class="docutils literal notranslate"><span class="pre">%run</span></code> via ipython package. After everything has been set up,
 <code class="docutils literal notranslate"><span class="pre">%timeit</span></code> can be used as:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">In [75]: %timeit hm.run_serial([&quot;Rebelliousness&quot;], [0.05], 10, insurgency_interact, [hm], 1)</span>
@@ -440,6 +387,11 @@ is set to 20 by default. The arguments for the interaction function must be put 
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">In [10]: %timeit %run ./test_insurgency.py</span>
 </pre></div>
 </div>
+<p>The average values of all the focus nodes across all agents are displayed below:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<p>The recorded time using the second method was <code class="docutils literal notranslate"><span class="pre">1.35</span> <span class="pre">ms</span></code> seconds.</p>
 </section>
 
 

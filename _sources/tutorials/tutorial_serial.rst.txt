@@ -124,20 +124,6 @@ Runtime can be recorded by using ``timeit``:
     # run the function a total of 20 times and measure the time
     print(t.timeit(20))
 
-The results are displayed below:
-
-..  csv-table:: Intput
-    :file: input_2.csv
-    :header-rows: 1
-    :stub-columns: 1
-
-..  csv-table:: Output
-    :file: output_2.csv
-    :header-rows: 1
-    :stub-columns: 1
-
-The recorded time was on average ``1.35 ms`` seconds.
-
 Another way to record time is to use ``%timeit`` and ``%run`` via ipython package. After everything has been set up,
 ``%timeit`` can be used as:
 
@@ -150,3 +136,11 @@ If the model is in a python file, the following code will run the file from with
 ..  code-block:: console
 
     In [10]: %timeit %run ./test_insurgency.py
+
+The average values of all the focus nodes across all agents are displayed below:
+
+.. code-block:: console
+
+
+
+The recorded time using the second method was ``1.35 ms`` seconds.
