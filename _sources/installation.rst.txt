@@ -5,7 +5,7 @@ To use the package, first install it using pip:
 
 ..  code-block:: console
 
-    pip install cuda_hybrid
+    pip install cuda-hybrid
 
 Dependencies:
 

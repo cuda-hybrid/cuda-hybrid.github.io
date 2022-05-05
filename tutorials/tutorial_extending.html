@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>Extending FCM &#8212; cuda_hybrid  documentation</title>
+    <title>Extending FCM &#8212; cuda-hybrid  documentation</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -73,7 +73,7 @@
       
       
       
-      <h1 class="site-logo" id="site-title">cuda_hybrid  documentation</h1>
+      <h1 class="site-logo" id="site-title">cuda-hybrid  documentation</h1>
       
     </a>
 </div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
@@ -314,8 +314,9 @@ title="Print to PDF"
 <h1>Extending FCM<a class="headerlink" href="#extending-fcm" title="Permalink to this headline">#</a></h1>
 <p>FCM models can be extended in different ways to overcome its shortcomings, one of which is <strong>Interval-Valued Fuzzy Cognitive Maps (IVFCMs)</strong> proposed by Hajek and Prochazka <a class="footnote-reference brackets" href="#f1" id="id1">1</a>. This tutorial introduces an example of modifying the library to fit the FCM model used. This will be done by extending upon the previous <a class="reference internal" href="tutorial_serial.html#serial"><span class="std std-ref">insurgency model</span></a>.</p>
 <p>Since the node values and the edge weights for the IVFCMS are defined as intervals, the initial values and edge weights
-will be initiated as follows:</p>
+will be initiated as followed:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">networkx</span> <span class="k">as</span> <span class="nn">nx</span>
+<span class="kn">import</span> <span class="nn">cuda</span><span class="o">-</span><span class="n">hybrid</span> <span class="k">as</span> <span class="n">ch</span>
 
 <span class="k">def</span> <span class="nf">create_insurgency_fcm</span><span class="p">():</span>
 
@@ -337,11 +338,11 @@ will be initiated as follows:</p>
 <span class="n">G</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">G</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">newman_watts_strogatz_graph</span><span class="p">(</span><span class="mi">2000</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">agent</span> <span class="ow">in</span> <span class="n">G</span><span class="o">.</span><span class="n">nodes</span><span class="p">():</span>
     <span class="n">G</span><span class="o">.</span><span class="n">nodes</span><span class="p">[</span><span class="n">agent</span><span class="p">][</span><span class="s2">&quot;FCM&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">create_insurgency_fcm</span><span class="p">()</span>
-<span class="n">hm</span> <span class="o">=</span> <span class="n">HybridModel</span><span class="p">(</span><span class="n">G</span><span class="p">)</span>
+<span class="n">hm</span> <span class="o">=</span> <span class="n">ch</span><span class="o">.</span><span class="n">HybridModel</span><span class="p">(</span><span class="n">G</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>For this model, node values are randomly generated but for others, there might be certain rules for setting the values. Such situations can still use</p>
-<p>Since the node values are now intervals, there are a few changes that need to be made to the library. In the original <a class="reference internal" href="../docs.html#cuda_hybrid.HybridModel" title="cuda_hybrid.HybridModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">HybridModel</span></code></a>, there are three 2D numpy arrays <code class="xref py py-attr docutils literal notranslate"><span class="pre">node_val</span></code>, <code class="xref py py-attr docutils literal notranslate"><span class="pre">node_future_val</span></code>, and <code class="xref py py-attr docutils literal notranslate"><span class="pre">FCM_adj</span></code>, which will need to be changed to a 3D array to accommodate the intervals. In <a class="reference internal" href="../docs.html#cuda_hybrid.HybridModel.transformNetwork" title="cuda_hybrid.HybridModel.transformNetwork"><code class="xref py py-meth docutils literal notranslate"><span class="pre">transformNetwork</span></code></a> method, replace:</p>
+<p>For this model, node values are randomly generated but for others, there might be certain rules that must be followed. For simplicity, no such rules are proposed for this model.</p>
+<p>Since the node values are now intervals, there are a few changes that need to be made to the library. In the original <code class="xref py py-class docutils literal notranslate"><span class="pre">HybridModel</span></code>, there are three 2D numpy arrays: <code class="xref py py-attr docutils literal notranslate"><span class="pre">node_val</span></code>, <code class="xref py py-attr docutils literal notranslate"><span class="pre">node_future_val</span></code>, and <code class="xref py py-attr docutils literal notranslate"><span class="pre">FCM_adj</span></code>, which will need to be changed to a 3D array to accommodate the intervals. In <code class="xref py py-meth docutils literal notranslate"><span class="pre">transformNetwork</span></code> method, replace:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="bp">self</span><span class="o">.</span><span class="n">FCM_adj</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">to_numpy_array</span><span class="p">(</span><span class="n">G</span><span class="o">.</span><span class="n">nodes</span><span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="n">G</span><span class="o">.</span><span class="n">nodes</span><span class="p">())[</span><span class="mi">0</span><span class="p">]][</span><span class="s2">&quot;FCM&quot;</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -395,7 +396,7 @@ will be initiated as follows:</p>
         <span class="bp">self</span><span class="o">.</span><span class="n">node_future_val</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">fcm_node</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
 </pre></div>
 </div>
-<p>Another place that needs to be changed is the <code class="xref py py-func docutils literal notranslate"><span class="pre">runFCMCUDA</span></code> (or <code class="xref py py-func docutils literal notranslate"><span class="pre">runFCMCUDA_comm</span></code> if run with communities or <a class="reference internal" href="../docs.html#cuda_hybrid.HybridModel.runFCM" title="cuda_hybrid.HybridModel.runFCM"><code class="xref py py-meth docutils literal notranslate"><span class="pre">runFCM</span></code></a> if run serially). The rules for adding and multiplying intervals can be found in the paper <a class="footnote-reference brackets" href="#f1" id="id2">1</a>. Since the total input to a node will now have an interval, the following code:</p>
+<p>Another place that needs to be modified is the <code class="xref py py-func docutils literal notranslate"><span class="pre">runFCMCUDA_comm</span></code> function(or <code class="xref py py-func docutils literal notranslate"><span class="pre">runFCMCUDA</span></code> if run without communities or <code class="xref py py-meth docutils literal notranslate"><span class="pre">runFCM</span></code> if run serially). The rules for adding and multiplying intervals can be found in the paper <a class="footnote-reference brackets" href="#f1" id="id2">1</a>. Since the total input to a node will now have bounds, the following code:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># loop through the concept nodes in the FCM</span>
 <span class="k">for</span> <span class="n">concept</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">FCM_adj</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
     <span class="n">weightSum</span> <span class="o">=</span> <span class="mi">0</span>
@@ -455,6 +456,15 @@ will be initiated as follows:</p>
     <span class="c1"># the threshold check was not mentioned in the paper so that part was removed, though the parameter threshold is still kept for minimal changes</span>
 </pre></div>
 </div>
+<p>The last function that needs attention is <code class="xref py py-func docutils literal notranslate"><span class="pre">loadNewValuesCUDA_comm</span></code>. Since there are now two dimensions for each node value, the following line:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">node_val</span><span class="p">[</span><span class="n">agent_idx</span><span class="p">][</span><span class="n">concept</span><span class="p">]</span> <span class="o">=</span> <span class="n">node_future_val</span><span class="p">[</span><span class="n">agent_idx</span><span class="p">][</span><span class="n">concept</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>can be replaced with:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">node_val</span><span class="p">[</span><span class="n">agent_idx</span><span class="p">][</span><span class="n">concept</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">node_future_val</span><span class="p">[</span><span class="n">agent_idx</span><span class="p">][</span><span class="n">concept</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">node_val</span><span class="p">[</span><span class="n">agent_idx</span><span class="p">][</span><span class="n">concept</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">node_future_val</span><span class="p">[</span><span class="n">agent_idx</span><span class="p">][</span><span class="n">concept</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
 <section id="running-the-simulation-with-communities">
 <h2>Running the simulation with communities<a class="headerlink" href="#running-the-simulation-with-communities" title="Permalink to this headline">#</a></h2>
 <p>The last thing that is needed for this to work is the interaction function. In order to simplify the interaction function and introduce running with communities to accommodate more agents, the interaction function will be run in serial while the FCMs will be run in parallel. There are only a few differences between this interaction function and the interaction function in the <a class="reference internal" href="tutorial_serial.html#serial"><span class="std std-ref">serial insurgency model</span></a> because of broadcasting in numpy and will be noted with comments.</p>
@@ -511,13 +521,13 @@ will be initiated as follows:</p>
         <span class="p">)</span>
 </pre></div>
 </div>
-<p>The simulation then can be run using the <a class="reference internal" href="../docs.html#cuda_hybrid.HybridModel.run_parallel" title="cuda_hybrid.HybridModel.run_parallel"><code class="xref py py-func docutils literal notranslate"><span class="pre">run_parallel</span></code></a> and setting <code class="docutils literal notranslate"><span class="pre">with_community</span></code> to <code class="docutils literal notranslate"><span class="pre">True</span></code> along with providing a community algorithm.</p>
+<p>The simulation then can be run using the <code class="xref py py-func docutils literal notranslate"><span class="pre">run_parallel</span></code> and setting <code class="docutils literal notranslate"><span class="pre">with_community</span></code> to <code class="docutils literal notranslate"><span class="pre">True</span></code> along with providing a community algorithm.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">hm</span><span class="o">.</span><span class="n">run_parallel</span><span class="p">([</span><span class="s2">&quot;Rebelliousness&quot;</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.05</span><span class="p">],</span> <span class="mi">10</span><span class="p">,</span> <span class="n">insurgency_interact</span><span class="p">,</span> <span class="p">[</span><span class="n">hm</span><span class="p">],</span> <span class="mi">20</span><span class="p">,</span>
             <span class="kc">True</span><span class="p">,</span> <span class="n">nx</span><span class="o">.</span><span class="n">algorithms</span><span class="o">.</span><span class="n">community</span><span class="o">.</span><span class="n">greedy_modularity_communities</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>The results are displayed below:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">{&#39;Rebelliousness&#39;: array([0.40053773, 0.5359976 ], dtype=float32)}</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">{&#39;Rebelliousness&#39;: array([0.40102673, 0.5344537 ], dtype=float32)}</span>
 </pre></div>
 </div>
 <p class="rubric">References</p>

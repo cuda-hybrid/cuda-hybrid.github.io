@@ -13,13 +13,13 @@ In a python file, import the module:
 
 ..  code-block:: python
 
-    import cuda_hybrid as md
+    import cuda-hybrid as ch
 
-The model can be built using :func:`generate_model<cuda_hybrid.generate_model>`:
+The model can be built using :func:`generate_model<cuda-hybrid.generate_model>`:
 
 ..  code-block:: python
 
-    hm = generate_model(1000, 'insurgency_simple.txt', 'watts')
+    hm = ch.generate_model(1000, 'insurgency_simple.txt', 'watts')
 
 After that, create interaction function. There can be multiple helper functions, but everything should be wrapped
 in one function only to passed as an argument. For this tutorial, the interaction is serial, while the FCMs will be run
@@ -75,22 +75,22 @@ in parallel. These functions are exactly the same as the ones in :ref:`Serial`
                     insurgeList
             )
 
-The ``insurgency_interact`` can then be passed to :meth:`run_parallel<cuda_hybrid.HybridModel.run_parallel>`, along with other arguments, which includes the hybridmodel object,
+The ``insurgency_interact`` can then be passed to :meth:`run_parallel<cuda-hybrid.HybridModel.run_parallel>`, along with other arguments, which includes the hybridmodel object,
 a list of focus nodes, a list of thresholds for the focus nodes, the maximum number of iterations for the FCMs, and, optionally, 
 number of steps.
 
 ..  code-block:: python
 
-    print(hm.run_parallel(["Rebelliousness"], [0.05], 10, insurgency_interact, [hm], 100)["Rebelliousness"])
+    print(hm.run_parallel(["Rebelliousness"], [0.05], 10, insurgency_interact, [hm], 100)])
 
-The function :func:`run_parallel<cuda_hybrid.HybridModel.run_parallel>` will return an average values across all agents
+The function :func:`run_parallel<cuda-hybrid.HybridModel.run_parallel>` will return an average values across all agents
 for all the focus nodes. The results of the above simulation is shown below:
 
 .. code-block:: console
 
+    {'Rebelliousness': 0.9723588069677352}
 
-
-The recorded time of the parallel version was ``1.3296318054199219`` seconds, 
-while that of the serial version was ``5.328189849853516`` seconds.
+The recorded time of the parallel version was ``5.16 s``, 
+while that of the serial version was ``2min 44s``.
 
 

@@ -4,11 +4,12 @@ Extending FCM
 FCM models can be extended in different ways to overcome its shortcomings, one of which is **Interval-Valued Fuzzy Cognitive Maps (IVFCMs)** proposed by Hajek and Prochazka [#f1]_. This tutorial introduces an example of modifying the library to fit the FCM model used. This will be done by extending upon the previous :ref:`insurgency model<Serial>`.
 
 Since the node values and the edge weights for the IVFCMS are defined as intervals, the initial values and edge weights 
-will be initiated as follows:
+will be initiated as followed:
 
 ..  code-block:: python
 
     import networkx as nx
+    import cuda-hybrid as ch
 
     def create_insurgency_fcm():
 
@@ -30,11 +31,11 @@ will be initiated as follows:
     G = nx.G = nx.newman_watts_strogatz_graph(2000, 2, 2)
     for agent in G.nodes():
         G.nodes[agent]["FCM"] = create_insurgency_fcm()
-    hm = HybridModel(G)
+    hm = ch.HybridModel(G)
 
-For this model, node values are randomly generated but for others, there might be certain rules for setting the values. Such situations can still use  
+For this model, node values are randomly generated but for others, there might be certain rules that must be followed. For simplicity, no such rules are proposed for this model.
 
-Since the node values are now intervals, there are a few changes that need to be made to the library. In the original :class:`HybridModel<cuda_hybrid.HybridModel>`, there are three 2D numpy arrays :attr:`node_val`, :attr:`node_future_val`, and :attr:`FCM_adj`, which will need to be changed to a 3D array to accommodate the intervals. In :meth:`transformNetwork<cuda_hybrid.HybridModel.transformNetwork>` method, replace:
+Since the node values are now intervals, there are a few changes that need to be made to the library. In the original :class:`HybridModel<cuda_hybrid.HybridModel>`, there are three 2D numpy arrays: :attr:`node_val`, :attr:`node_future_val`, and :attr:`FCM_adj`, which will need to be changed to a 3D array to accommodate the intervals. In :meth:`transformNetwork<cuda_hybrid.HybridModel.transformNetwork>` method, replace:
 
 ..  code-block:: python
 
@@ -96,7 +97,7 @@ with:
             self.node_future_val[i][j][0] = fcm_node[1][0]
             self.node_future_val[i][j][1] = fcm_node[1][1]
 
-Another place that needs to be changed is the :func:`runFCMCUDA<cuda_hybrid.runFCMCUDA>` (or :func:`runFCMCUDA_comm<cuda_hybrid.runFCMCUDA_comm>` if run with communities or :meth:`runFCM<cuda_hybrid.HybridModel.runFCM>` if run serially). The rules for adding and multiplying intervals can be found in the paper [#f1]_. Since the total input to a node will now have an interval, the following code:
+Another place that needs to be modified is the :func:`runFCMCUDA_comm<cuda_hybrid.runFCMCUDA_comm>` function(or :func:`runFCMCUDA<cuda_hybrid.runFCMCUDA>` if run without communities or :meth:`runFCM<cuda_hybrid.HybridModel.runFCM>` if run serially). The rules for adding and multiplying intervals can be found in the paper [#f1]_. Since the total input to a node will now have bounds, the following code:
 
 ..  code-block:: python
 
@@ -160,6 +161,19 @@ can be changed to:
         node_future_val[agent][concept][0] = 1 / (1 + math.exp(node_lower))
 
         # the threshold check was not mentioned in the paper so that part was removed, though the parameter threshold is still kept for minimal changes
+
+The last function that needs attention is :func:`loadNewValuesCUDA_comm<cuda_hybrid.loadNewValuesCUDA_comm>`. Since there are now two dimensions for each node value, the following line:
+
+..  code-block:: python
+
+    node_val[agent_idx][concept] = node_future_val[agent_idx][concept]
+
+can be replaced with:
+
+..  code-block:: python
+
+    node_val[agent_idx][concept][0] = node_future_val[agent_idx][concept][0]
+    node_val[agent_idx][concept][1] = node_future_val[agent_idx][concept][1]
 
 Running the simulation with communities
 ------------------------------------------
@@ -226,12 +240,12 @@ The simulation then can be run using the :func:`run_parallel<cuda_hybrid.HybridM
 
     hm.run_parallel(["Rebelliousness"], [0.05], 10, insurgency_interact, [hm], 20, 
                 True, nx.algorithms.community.greedy_modularity_communities)
-                
+
 The results are displayed below:
 
 .. code-block:: console
 
-   {'Rebelliousness': array([0.40053773, 0.5359976 ], dtype=float32)}
+   {'Rebelliousness': array([0.40102673, 0.5344537 ], dtype=float32)}
 
 .. rubric:: References
 

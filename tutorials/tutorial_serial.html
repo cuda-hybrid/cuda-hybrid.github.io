@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>Serial &#8212; cuda_hybrid  documentation</title>
+    <title>Serial &#8212; cuda-hybrid  documentation</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -73,7 +73,7 @@
       
       
       
-      <h1 class="site-logo" id="site-title">cuda_hybrid  documentation</h1>
+      <h1 class="site-logo" id="site-title">cuda-hybrid  documentation</h1>
       
     </a>
 </div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
@@ -279,11 +279,11 @@ title="Print to PDF"
 <img alt="../_images/insurgency_simple.svg" src="../_images/insurgency_simple.svg" /><p>Each agent has three nodes: Economic Development(ED), Rebelliousness(R), Ability of Insurgents to Control Population(AICP).</p>
 <p>The two agents will interact with each other, and their final values for Rebelliousness will be recorded.</p>
 <p>By default, the simulation will run 100 times.</p>
-<p>In a python file, import the <a class="reference internal" href="../docs.html#module-cuda_hybrid" title="cuda_hybrid"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cuda_hybrid</span></code></a> module:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">cuda_hybrid</span> <span class="k">as</span> <span class="nn">md</span>
+<p>In a python file, import the <code class="xref py py-mod docutils literal notranslate"><span class="pre">cuda-hybrid</span></code> module:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">cuda</span><span class="o">-</span><span class="n">hybrid</span> <span class="k">as</span> <span class="n">md</span>
 </pre></div>
 </div>
-<p>Next, create a model using <a class="reference internal" href="../docs.html#cuda_hybrid.generate_model" title="cuda_hybrid.generate_model"><code class="xref py py-func docutils literal notranslate"><span class="pre">generate_model</span></code></a>:</p>
+<p>Next, create a model using <code class="xref py py-func docutils literal notranslate"><span class="pre">generate_model</span></code>:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">hm</span> <span class="o">=</span> <span class="n">md</span><span class="o">.</span><span class="n">generate_model</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;newman&quot;</span><span class="p">,</span> <span class="s2">&quot;insurgency_simple.txt&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -292,7 +292,7 @@ title="Print to PDF"
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>The interactions can be broken up into different methods, but these methods need to be wrapped
-into one function only in order to be passed to the <a class="reference internal" href="../docs.html#cuda_hybrid.HybridModel.run_serial" title="cuda_hybrid.HybridModel.run_serial"><code class="xref py py-meth docutils literal notranslate"><span class="pre">run_serial</span></code></a> method.</p>
+into one function only in order to be passed to the <code class="xref py py-meth docutils literal notranslate"><span class="pre">run_serial</span></code> method.</p>
 </div>
 <p>The two rules for agent interactions for this model are:</p>
 <p>#. If the sum of ED values of an agent’s neighbors is larger than 110% of the agent’s ED,
@@ -362,7 +362,7 @@ Deduct 10% of the total AICPs of its neighbors from its new ED value:</p>
 <p class="admonition-title">Note</p>
 <p>The above method takes the HybridModel object as the only argument. This can be changed depending on the use case</p>
 </div>
-<p>To run the simulation, call the <a class="reference internal" href="../docs.html#cuda_hybrid.HybridModel.run_serial" title="cuda_hybrid.HybridModel.run_serial"><code class="xref py py-meth docutils literal notranslate"><span class="pre">run_serial</span></code></a>. The last argument, which is the number of steps
+<p>To run the simulation, call the <code class="xref py py-meth docutils literal notranslate"><span class="pre">run_serial</span></code>. The last argument, which is the number of steps
 is set to 20 by default. The arguments for the interaction function must be put into an array:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">hm</span><span class="o">.</span><span class="n">run_serial</span><span class="p">([</span><span class="s2">&quot;Rebelliousness&quot;</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.05</span><span class="p">],</span> <span class="mi">10</span><span class="p">,</span> <span class="n">insurgency_interact</span><span class="p">,</span> <span class="p">[</span><span class="n">hm</span><span class="p">],</span> <span class="mi">100</span><span class="p">)</span>
 </pre></div>
@@ -372,7 +372,7 @@ is set to 20 by default. The arguments for the interaction function must be put 
 
 <span class="k">def</span> <span class="nf">run</span><span class="p">():</span>
     <span class="n">hm</span> <span class="o">=</span> <span class="n">generate_model</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;newman&quot;</span><span class="p">,</span> <span class="s2">&quot;insurgency_simple.txt&quot;</span><span class="p">)</span>
-    <span class="n">hm</span><span class="o">.</span><span class="n">run_serial</span><span class="p">([</span><span class="s2">&quot;Rebelliousness&quot;</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.05</span><span class="p">],</span> <span class="mi">10</span><span class="p">,</span> <span class="n">insurgency_interact</span><span class="p">,</span> <span class="p">[</span><span class="n">hm</span><span class="p">],</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">hm</span><span class="o">.</span><span class="n">run_serial</span><span class="p">([</span><span class="s2">&quot;Rebelliousness&quot;</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.05</span><span class="p">],</span> <span class="mi">10</span><span class="p">,</span> <span class="n">insurgency_interact</span><span class="p">,</span> <span class="p">[</span><span class="n">hm</span><span class="p">],</span> <span class="mi">100</span><span class="p">)</span>
 <span class="n">t</span> <span class="o">=</span> <span class="n">Timer</span><span class="p">(</span><span class="s1">&#39;run()&#39;</span><span class="p">,</span><span class="s1">&#39;from test_insurgency import run&#39;</span><span class="p">)</span>
 <span class="c1"># run the function a total of 20 times and measure the time</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">timeit</span><span class="p">(</span><span class="mi">20</span><span class="p">))</span>
@@ -380,7 +380,7 @@ is set to 20 by default. The arguments for the interaction function must be put 
 </div>
 <p>Another way to record time is to use <code class="docutils literal notranslate"><span class="pre">%timeit</span></code> and <code class="docutils literal notranslate"><span class="pre">%run</span></code> via ipython package. After everything has been set up,
 <code class="docutils literal notranslate"><span class="pre">%timeit</span></code> can be used as:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">In [75]: %timeit hm.run_serial([&quot;Rebelliousness&quot;], [0.05], 10, insurgency_interact, [hm], 1)</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">In [75]: %timeit hm.run_serial([&quot;Rebelliousness&quot;], [0.05], 10, insurgency_interact, [hm], 100)</span>
 </pre></div>
 </div>
 <p>If the model is in a python file, the following code will run the file from within ipython and measure the time:</p>

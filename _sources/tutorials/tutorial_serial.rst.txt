@@ -12,13 +12,13 @@ The two agents will interact with each other, and their final values for Rebelli
 
 By default, the simulation will run 100 times.
 
-In a python file, import the :mod:`cuda_hybrid<cuda_hybrid>` module:
+In a python file, import the :mod:`cuda-hybrid<cuda-hybrid>` module:
 
 ..  code-block:: python
 
-    import cuda_hybrid as md
+    import cuda-hybrid as md
 
-Next, create a model using :func:`generate_model<cuda_hybrid.generate_model>`:
+Next, create a model using :func:`generate_model<cuda-hybrid.generate_model>`:
 
 ..  code-block:: python
 
@@ -31,7 +31,7 @@ Now create a function that simulates the interactions between the agents:
 ..  note::
 
     The interactions can be broken up into different methods, but these methods need to be wrapped
-    into one function only in order to be passed to the :meth:`run_serial<cuda_hybrid.HybridModel.run_serial>` method.
+    into one function only in order to be passed to the :meth:`run_serial<cuda-hybrid.HybridModel.run_serial>` method.
 
 The two rules for agent interactions for this model are:
 
@@ -119,7 +119,7 @@ Runtime can be recorded by using ``timeit``:
     
     def run():
         hm = generate_model(2, "newman", "insurgency_simple.txt")
-        hm.run_serial(["Rebelliousness"], [0.05], 10, insurgency_interact, [hm], 1)
+        hm.run_serial(["Rebelliousness"], [0.05], 10, insurgency_interact, [hm], 100)
     t = Timer('run()','from test_insurgency import run')
     # run the function a total of 20 times and measure the time
     print(t.timeit(20))
@@ -129,7 +129,7 @@ Another way to record time is to use ``%timeit`` and ``%run`` via ipython packag
 
 ..  code-block:: console
 
-    In [75]: %timeit hm.run_serial(["Rebelliousness"], [0.05], 10, insurgency_interact, [hm], 1)
+    In [75]: %timeit hm.run_serial(["Rebelliousness"], [0.05], 10, insurgency_interact, [hm], 100)
 
 If the model is in a python file, the following code will run the file from within ipython and measure the time:
 

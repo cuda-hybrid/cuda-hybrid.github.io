@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>Parallel &#8212; cuda_hybrid  documentation</title>
+    <title>Parallel &#8212; cuda-hybrid  documentation</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -73,7 +73,7 @@
       
       
       
-      <h1 class="site-logo" id="site-title">cuda_hybrid  documentation</h1>
+      <h1 class="site-logo" id="site-title">cuda-hybrid  documentation</h1>
       
     </a>
 </div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
@@ -283,11 +283,11 @@ between the runtimes of the two versions.</p>
 <p>For more details about the model, please refer to <a class="reference internal" href="tutorial_serial.html#serial"><span class="std std-ref">the serial use case</span></a>.</p>
 </div>
 <p>In a python file, import the module:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">cuda_hybrid</span> <span class="k">as</span> <span class="nn">md</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">cuda</span><span class="o">-</span><span class="n">hybrid</span> <span class="k">as</span> <span class="n">ch</span>
 </pre></div>
 </div>
-<p>The model can be built using <a class="reference internal" href="../docs.html#cuda_hybrid.generate_model" title="cuda_hybrid.generate_model"><code class="xref py py-func docutils literal notranslate"><span class="pre">generate_model</span></code></a>:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">hm</span> <span class="o">=</span> <span class="n">generate_model</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="s1">&#39;insurgency_simple.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;watts&#39;</span><span class="p">)</span>
+<p>The model can be built using <code class="xref py py-func docutils literal notranslate"><span class="pre">generate_model</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">hm</span> <span class="o">=</span> <span class="n">ch</span><span class="o">.</span><span class="n">generate_model</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="s1">&#39;insurgency_simple.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;watts&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>After that, create interaction function. There can be multiple helper functions, but everything should be wrapped
@@ -342,19 +342,19 @@ in parallel. These functions are exactly the same as the ones in <a class="refer
         <span class="p">)</span>
 </pre></div>
 </div>
-<p>The <code class="docutils literal notranslate"><span class="pre">insurgency_interact</span></code> can then be passed to <a class="reference internal" href="../docs.html#cuda_hybrid.HybridModel.run_parallel" title="cuda_hybrid.HybridModel.run_parallel"><code class="xref py py-meth docutils literal notranslate"><span class="pre">run_parallel</span></code></a>, along with other arguments, which includes the hybridmodel object,
+<p>The <code class="docutils literal notranslate"><span class="pre">insurgency_interact</span></code> can then be passed to <code class="xref py py-meth docutils literal notranslate"><span class="pre">run_parallel</span></code>, along with other arguments, which includes the hybridmodel object,
 a list of focus nodes, a list of thresholds for the focus nodes, the maximum number of iterations for the FCMs, and, optionally,
 number of steps.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">hm</span><span class="o">.</span><span class="n">run_parallel</span><span class="p">([</span><span class="s2">&quot;Rebelliousness&quot;</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.05</span><span class="p">],</span> <span class="mi">10</span><span class="p">,</span> <span class="n">insurgency_interact</span><span class="p">,</span> <span class="p">[</span><span class="n">hm</span><span class="p">],</span> <span class="mi">100</span><span class="p">)[</span><span class="s2">&quot;Rebelliousness&quot;</span><span class="p">])</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">hm</span><span class="o">.</span><span class="n">run_parallel</span><span class="p">([</span><span class="s2">&quot;Rebelliousness&quot;</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.05</span><span class="p">],</span> <span class="mi">10</span><span class="p">,</span> <span class="n">insurgency_interact</span><span class="p">,</span> <span class="p">[</span><span class="n">hm</span><span class="p">],</span> <span class="mi">100</span><span class="p">)])</span>
 </pre></div>
 </div>
-<p>The function <a class="reference internal" href="../docs.html#cuda_hybrid.HybridModel.run_parallel" title="cuda_hybrid.HybridModel.run_parallel"><code class="xref py py-func docutils literal notranslate"><span class="pre">run_parallel</span></code></a> will return an average values across all agents
+<p>The function <code class="xref py py-func docutils literal notranslate"><span class="pre">run_parallel</span></code> will return an average values across all agents
 for all the focus nodes. The results of the above simulation is shown below:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">{&#39;Rebelliousness&#39;: 0.9723588069677352}</span>
 </pre></div>
 </div>
-<p>The recorded time of the parallel version was <code class="docutils literal notranslate"><span class="pre">1.3296318054199219</span></code> seconds,
-while that of the serial version was <code class="docutils literal notranslate"><span class="pre">5.328189849853516</span></code> seconds.</p>
+<p>The recorded time of the parallel version was <code class="docutils literal notranslate"><span class="pre">5.16</span> <span class="pre">s</span></code>,
+while that of the serial version was <code class="docutils literal notranslate"><span class="pre">2min</span> <span class="pre">44s</span></code>.</p>
 </section>
 
 
