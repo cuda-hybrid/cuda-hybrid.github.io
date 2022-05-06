@@ -63,7 +63,7 @@ data was collected by running the obesity model with different types of networks
 The data are then organized into a csv file. The first five rows are displayed below:
 
 ..  csv-table::
-    :file: obesity_timeComp_cuda_sample.csv
+    :file: parallel_times_sample.csv
 
 The complete csv file can be found here: :download:`obesity_parallel_gpu.csv<../../../parallel_times.csv>`
 

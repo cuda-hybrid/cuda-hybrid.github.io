@@ -1,5 +1,5 @@
 Documentation
 =================
 
-..  automodule:: cuda_hybrid
+..  automodule:: cuda-hybrid
     :members:
