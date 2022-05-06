@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>Customizing Node Values &#8212; cuda-hybrid  documentation</title>
+    <title>Customizing Node Values &#8212; cuda-hybrid 0.1.5 documentation</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -73,7 +73,7 @@
       
       
       
-      <h1 class="site-logo" id="site-title">cuda-hybrid  documentation</h1>
+      <h1 class="site-logo" id="site-title">cuda-hybrid 0.1.5 documentation</h1>
       
     </a>
 </div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
@@ -131,7 +131,7 @@
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../docs.html">
-   Documentation
+   API Documentation
   </a>
  </li>
  <li class="toctree-l1">
@@ -456,9 +456,9 @@ attribute can be added as below for each node:</p>
 </pre></div>
 </div>
 <p>Here are the complete files that were used above:</p>
-<p><a class="reference download internal" download="" href="../_downloads/ae7a65ce65c0ee6c600f04b03f94e5d5/obesity.txt"><code class="xref download docutils literal notranslate"><span class="pre">obesity.txt</span></code></a></p>
-<p><a class="reference download internal" download="" href="../_downloads/4e507691144695195d7bec07525b18da/age_related.txt"><code class="xref download docutils literal notranslate"><span class="pre">age_related.txt</span></code></a></p>
-<p><a class="reference download internal" download="" href="../_downloads/3ed43f19855afe433c23a14ea39852dc/income.txt"><code class="xref download docutils literal notranslate"><span class="pre">income.txt</span></code></a></p>
+<p><a class="reference download internal" download="" href="../_downloads/3e14d0a2485ec2210ad066c8b3beba54/obesity.txt"><code class="xref download docutils literal notranslate"><span class="pre">obesity.txt</span></code></a></p>
+<p><a class="reference download internal" download="" href="../_downloads/d80dd1db825fcb8e745801e390c5572f/age_related.txt"><code class="xref download docutils literal notranslate"><span class="pre">age_related.txt</span></code></a></p>
+<p><a class="reference download internal" download="" href="../_downloads/7f528e37d9f0df7f698c0ebad3e0fc45/income.txt"><code class="xref download docutils literal notranslate"><span class="pre">income.txt</span></code></a></p>
 <p>The last two files were also combined into one excel file: <a class="reference download internal" download="" href="../_downloads/967bf6bdb85f0614519922b2435fb05f/distributions_of_concepts.xlsx"><code class="xref download docutils literal notranslate"><span class="pre">distributions_of_concepts.xlsx</span></code></a></p>
 </section>
 <section id="abm">
@@ -470,7 +470,7 @@ The FCM graph can the be accessed by <code class="docutils literal notranslate">
 <p>As mentioned above, the simulation will be run with a small world network, so  <code class="docutils literal notranslate"><span class="pre">networkx.watts_strogatz_graph()</span></code> function
 is used here. Every agent will then get its own FCM graph by using <code class="docutils literal notranslate"><span class="pre">create_obesity_FCM</span></code>. The completed ABM/FCM graph will
 be passed as an argument to the constructor of the HybridModel to be used with the package:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">cuda</span><span class="o">-</span><span class="n">hybrid</span> <span class="k">as</span> <span class="n">ch</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">cuda_hybrid</span> <span class="k">as</span> <span class="nn">ch</span>
 <span class="c1"># Same number of nodes and degree as indicated in the paper</span>
 <span class="n">G</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">watts_strogatz_graph</span><span class="p">(</span><span class="mi">2412</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">agent</span> <span class="ow">in</span> <span class="n">G</span><span class="o">.</span><span class="n">nodes</span><span class="p">():</span>

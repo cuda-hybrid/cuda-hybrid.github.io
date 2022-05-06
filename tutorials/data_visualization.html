@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>Data Visualization &#8212; cuda-hybrid  documentation</title>
+    <title>Data Visualization &#8212; cuda-hybrid 0.1.5 documentation</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -33,7 +33,7 @@
     <script src="../_static/scripts/sphinx-book-theme.js?digest=f31d14ad54b65d19161ba51d4ffff3a77ae00456"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Documentation" href="../docs.html" />
+    <link rel="next" title="API Documentation" href="../docs.html" />
     <link rel="prev" title="Extending FCM" href="tutorial_extending.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
@@ -73,7 +73,7 @@
       
       
       
-      <h1 class="site-logo" id="site-title">cuda-hybrid  documentation</h1>
+      <h1 class="site-logo" id="site-title">cuda-hybrid 0.1.5 documentation</h1>
       
     </a>
 </div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
@@ -131,7 +131,7 @@
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../docs.html">
-   Documentation
+   API Documentation
   </a>
  </li>
  <li class="toctree-l1">
@@ -381,7 +381,7 @@ The first five rows of the file:</p>
 </tr>
 </tbody>
 </table>
-<p>The complete dataset can be found here: <a class="reference download internal" download="" href="../_downloads/f6ccd8767c84893060dca57ac672ee52/obesity_serial.csv"><code class="xref download docutils literal notranslate"><span class="pre">obesity_serial.csv</span></code></a></p>
+<p>The complete dataset can be found here: <a class="reference download internal" download="" href="../_downloads/5f38e5b950a256b7c57e47b7222d21ed/obesity_serial.csv"><code class="xref download docutils literal notranslate"><span class="pre">obesity_serial.csv</span></code></a></p>
 <p>The file can be loaded to a panda dataframe using <code class="docutils literal notranslate"><span class="pre">pandas.pd.read_csv()</span></code>:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
@@ -438,16 +438,16 @@ The data are then organized into a csv file. The first five rows are displayed b
 </tr>
 </tbody>
 </table>
-<p>The complete csv file can be found here: <a class="reference download internal" download="" href="../_downloads/d3148e121eaaab3891eab37bdc1948c0/parallel_times.csv"><code class="xref download docutils literal notranslate"><span class="pre">obesity_parallel_gpu.csv</span></code></a></p>
+<p>The complete csv file can be found here: <a class="reference download internal" download="" href="../_downloads/7ab45314af21acb93ad5f058531006ff/parallel_times.csv"><code class="xref download docutils literal notranslate"><span class="pre">parallel_times.csv</span></code></a></p>
 <p>In order to use the above file for graphing, a pandas dataframe should be created and then <code class="docutils literal notranslate"><span class="pre">seaborn</span></code> and <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code>
 to graph it. Parameter <code class="docutils literal notranslate"><span class="pre">hue</span></code> can be set as <code class="docutils literal notranslate"><span class="pre">Type</span></code> to group the data. Parameter</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 
-<span class="n">runs</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;obesity_parallel_gpu.csv&quot;</span><span class="p">)</span>
+<span class="n">runs</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;parallel_times.csv&quot;</span><span class="p">)</span>
 <span class="n">sns</span><span class="o">.</span><span class="n">set_style</span><span class="p">(</span><span class="s2">&quot;darkgrid&quot;</span><span class="p">)</span>
-<span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">runs</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;Number of Agents&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;Time (minutes)&quot;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;Type&quot;</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">runs</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;Agents&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;Time(minutes)&quot;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;Type&quot;</span><span class="p">,</span> <span class="n">err_style</span><span class="o">=</span><span class="s2">&quot;bars&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -475,7 +475,7 @@ package page</p>
     <a class='right-next' id="next-link" href="../docs.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Documentation</p>
+        <p class="prev-next-title">API Documentation</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>
